@@ -1,0 +1,182 @@
+import os
+import requests
+import cohere
+from flask import Flask, request, render_template
+from dotenv import load_dotenv
+
+
+app = Flask(__name__)
+load_dotenv()
+
+tmdb_api_key = os.environ.get('TMDB_API_KEY')
+cohere_api_key = os.environ.get('COHERE_API_KEY')
+
+co = cohere.Client(cohere_api_key)
+
+def get_movie_details(movie_title):
+    """TMDB API'sinden film detaylarını alır."""
+
+    base_url = "https://api.themoviedb.org/3"
+    search_url = f"{base_url}/search/movie"
+    params = {
+        "api_key": tmdb_api_key,
+        "query": movie_title,
+        "language": "tr-TR"
+    }
+
+    response = requests.get(search_url, params=params)
+    data = response.json()
+
+    if data["results"]:
+        movie_id = data["results"][0]["id"]
+        details_url = f"{base_url}/movie/{movie_id}"
+        response = requests.get(details_url, params={"api_key": tmdb_api_key, "language": "tr-TR"})
+        details = response.json()
+
+        title = details["title"]
+        overview = details["overview"]
+        release_date = details["release_date"]
+        genres = [genre["name"] for genre in details["genres"]]
+        production_countries = [country["name"] for country in details["production_countries"]]
+
+        # Streaming platformlarını almak için ayrı bir çağrı yapın (isteğe bağlı)
+        # ... (Bu kısım henüz tamamlanmadı, gelecekte ekleyebilirsiniz)
+        streaming_platforms = [] 
+
+        return {
+            "title": title,
+            "overview": overview,
+            "release_date": release_date,
+            "genres": genres,
+            "production_countries": production_countries,
+            "streaming_platforms": streaming_platforms,
+            "tmdb_id": movie_id 
+        }
+    else:
+        return None
+
+def get_popular_movies():
+    """TMDB API'sinden popüler filmleri alır."""
+
+    base_url = "https://api.themoviedb.org/3"
+    popular_url = f"{base_url}/movie/popular"
+    params = {
+        "api_key": tmdb_api_key,
+        "language": "tr-TR"
+    }
+
+    response = requests.get(popular_url, params=params)
+    data = response.json()
+
+    popular_movies = []
+    for movie in data["results"]:
+        popular_movies.append({
+            "title": movie["title"],
+            "release_date": movie["release_date"]
+        })
+
+    return popular_movies
+
+def get_top_rated_movies_by_genre(genre):
+    """TMDB API'sinden belirli bir türe göre en iyi filmleri alır."""
+
+    # İlk olarak, tür adını tür ID'sine dönüştürmeniz gerekir
+    # Bunun için TMDB API'sindeki /genre/movie/list endpoint'ini kullanabilirsiniz.
+    # ... (Bu kısım henüz tamamlanmadı, gelecekte ekleyebilirsiniz)
+
+    top_rated_movies = [] 
+    return top_rated_movies
+
+def get_cohere_response(prompt):
+    """Cohere API'sinden yanıt alır."""
+
+    response = co.generate(
+        model='command-xlarge-nightly',
+        prompt=prompt,
+        max_tokens=300,
+        temperature=0.7,
+        k=0,
+        p=0.75,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop_sequences=[],
+        return_likelihoods='NONE'
+    )
+
+    return response.generations[0].text.strip()
+
+@app.route("/home")
+def home():
+    return render_template('home.html')
+
+@app.route("/get_response", methods=["POST"])
+def get_response():
+    user_input = request.form["user_input"]
+
+    # Cohere'a gönderilecek istemi (prompt) oluştur
+    prompt = f"""
+    You are a movie and TV show chatbot. Users will ask you for movie or TV show titles, and you will provide them with relevant information using the TMDB API. You can also list popular movies and the best movies by genre.
+
+    Respond to the user in an understanding manner and perhaps suggest another search.
+
+    User's request: {user_input}
+
+    Use the TMDB API to provide an appropriate response.
+
+    If the user is asking for information about a movie or TV show, make sure to include the following information and please structure your response under the following subheadings:
+
+    * Movie Details
+    * Title: 
+    * Overview: 
+    * Release Date: 
+    * Genres: 
+    * Production Countries: 
+    * TMDB Link: (in the format https://www.themoviedb.org/movie/{{tmdb_id}})
+    * Streaming Platforms: (if possible)
+    If the user requests popular movies or the best movies by a specific genre, provide the relevant lists.
+
+    If you don't understand the user's request, politely ask for more information or clarification.
+    """
+
+    response = get_cohere_response(prompt)
+
+    # (İsteğe bağlı) Cohere'un verdiği yanıtı ayrıştırıp TMDB API çağrıları yapabilirsiniz
+    # ...
+
+    # Yanıtı ayrıştır ve alt başlıkları bul
+    subtitles = response.split('**')
+    formatted_response = ''
+
+    for subtitle in subtitles:
+        if subtitle.strip():  # Boş alt başlıkları atla
+            lines = subtitle.strip().split('\n')
+            title = lines[0].strip()  # İlk satır alt başlık
+            content_lines = lines[1:]  # Geri kalan satırlar içerik
+
+            # İçeriği düzgün bir şekilde birleştir
+            content = ""
+            for line in content_lines:
+                stripped_line = line.strip()
+                if stripped_line:
+                    if stripped_line.startswith("*"):  # Eğer satır "*" ile başlıyorsa, liste öğesi olarak biçimlendir
+                        content += f"<li>{stripped_line[1:].strip()}</li>"
+                    else:
+                        content += stripped_line + "<br>"
+
+            # Sadece # ile başlayan başlıkları <h4> etiketine dönüştür
+            if title.startswith('#'):
+                formatted_response += f'<h4>{title[1:].strip()}</h4>' 
+            else:
+                formatted_response += f'<div>{title}</div>' 
+
+            if content.startswith("<li>"):
+                formatted_response += f'<ul>{content}</ul>'
+            else:
+                formatted_response += f'<div>{content}</div>'
+
+            formatted_response += '<br>'  # Her alt başlıktan sonra boşluk ekle
+
+    return formatted_response 
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=8000)

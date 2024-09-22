@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="../static/css/home.css">
+    <title>Chatbot - Brave Coder</title>
+</head>
+<body>
+  <section class="msger">
+    <header class="msger-header">
+      <div class="msger-header-title">
+        <i class="fas fa-comment-alt"></i> Movai
+      </div>
+      <div class="msger-header-options">
+        <span><i class="fas fa-cog"></i></span>
+      </div>
+    </header>
+  
+    <main class="msger-chat">
+      <div class="msg left-msg">
+
+  
+
+      </div>
+  
+      <div class="msg right-msg">
+
+  
+      </div>
+    </main>
+  
+    <form class="msger-inputarea">
+      <input type="text" class="msger-input" placeholder="Enter your message...">
+      <button type="submit" class="msger-send-btn">Send</button>
+    </form>
+  </section>
+
+  <script>
+const form = document.querySelector('.msger-inputarea');
+const input = document.querySelector('.msger-input');
+const chat = document.querySelector('.msger-chat');
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const userMessage = input.value;
+    input.value = ''; // Input alanını temizle
+
+    // Kullanıcı mesajını chat'e ekle
+    appendMessage("You", "right", userMessage);
+
+    // `/get_response` endpoint'ine POST isteği gönder
+    fetch('/get_response', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `user_input=${userMessage}`
+    })
+    .then(response => response.text()) // Yanıtı metin olarak al
+    .then(botResponse => {
+        // Bot yanıtını chat'e ekle
+        appendMessage("Debussy Bot", "left", botResponse);
+    });
+});
+
+function appendMessage(name, side, text) {
+    // Kullanıcı ve bot için farklı resimler tanımlayın
+    const userImage = "https://image.flaticon.com/icons/svg/145/145867.svg"; // Kullanıcı için
+    const botImage = "https://upload.wikimedia.org/wikipedia/commons/f/f9/Claude_Debussy_ca_1908%2C_foto_av_F%C3%A9lix_Nadar.jpg";   // Bot için
+
+    // Mesajın tarafına göre doğru resmi seçin
+    const imageURL = (side === 'left') ? botImage : userImage;
+
+    const msgHTML = `
+    <div class="msg ${side}-msg">
+        <div class="msg-img" style="background-image: url(${imageURL})"></div>
+        <div class="msg-bubble">
+            <div class="msg-info">
+                <div class="msg-info-name">${name}</div>
+                <div class="msg-info-time">${new Date().toLocaleString()}</div>
+            </div>
+            <div class="msg-text">${text}</div>
+        </div>
+    </div>
+    `;
+
+    chat.insertAdjacentHTML('beforeend', msgHTML);
+    chat.scrollTop += 500; 
+}
+
+function formatDate(date) {
+    // Tarih formatlama işlemleri (isteğe bağlı)
+    // ...
+}
+
+  </script>
+</body>
+</html>
