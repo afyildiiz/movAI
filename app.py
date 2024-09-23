@@ -13,6 +13,10 @@ cohere_api_key = os.environ.get('COHERE_API_KEY')
 
 co = cohere.Client(cohere_api_key)
 
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
 def get_movie_details(movie_title):
     """TMDB API'sinden film detaylarını alır."""
 

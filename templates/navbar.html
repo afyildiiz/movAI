@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/navbar.css">
-    <title>Document</title>
-</head>
-<body>
-    <!-- <nav class="navbar">
-        <div class="container">
-            <a href="#" class="logo"><img src="../static/img/logo-black.png" width="50" alt=""></a>
-            <ul class="nav-links">
-                <li><a href="index.html">Homepage</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="about.html">Contact</a></li>
-            </ul>
-        </div>
-    </nav> -->
+
     <div class="nav">
         <input type="checkbox" id="nav-check">
         <div class="nav-header">
@@ -33,14 +19,13 @@
         </div>
         
         <div class="nav-links">
-            <a href="index.html">Homepage</a>
+            <a href="{{ url_for('home')}}">Homepage</a>
             <a href="about.html">About</a>
-            <a href="about.html">Contact</a>
+            <a href="{{ url_for('contact')}}">Contact</a>
         </div>
         <div class="nav-exit">
 
           <div class = "down_note"></div>
         </div>
-      </div>
-</body>
-</html>
+    </div>
+

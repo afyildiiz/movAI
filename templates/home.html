@@ -79,10 +79,16 @@
 function appendMessage(side, text) {
     // Kullanıcı ve bot için farklı resimler tanımlayın
     const userImage = "../static/img/userphoto.jpg"; // Kullanıcı için
-    const botImage = "../static/img/ai_photo.webp";   // Bot için
+    const botImage = "../static/img/ai_photo.jpg";   // Bot için
 
     // Mesajın tarafına göre doğru resmi seçin
     const imageURL = (side === 'left') ? botImage : userImage;
+    // const spinner = (side==='right') ? `
+    // <div id="loading" class="loading-dots" style="display: none;">
+    //     <span></span><span></span><span></span>
+    //   </div>
+    //   ` : console.log("")
+    // console.log(spinner)
 
     const msgHTML = `
     <div class="msg ${side}-msg">

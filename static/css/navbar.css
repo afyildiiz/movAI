@@ -1,49 +1,3 @@
-/* .navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #ffffff; 
-    padding: 1rem;
-    z-index: 1000;
-    box-shadow: rgb(51, 51, 51) 0px 2px 8px 0px;
-}
-
-.container {
-    display: flex;
-    align-items: center;
-    max-width: 960px;
-    margin: 0 auto;
-}
-
-.logo {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: #fff;
-}
-
-.nav-links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    font-weight: bold;
-}
-
-.nav-links li {
-    margin-left: 2rem;
-}
-
-.nav-links li a {
-    text-decoration: none;
-    color: #000000;
-    transition: 0.3s ease all;
-}
-
-.nav-links li a:hover {
-    color: rgb(158, 144, 18);
-} */
-
 
 
 @import url('https://fonts.googleapis.com/css2?family=Kablammo&family=Oswald:wght@200&family=Press+Start+2P&family=Roboto:wght@300&family=Rubik+Iso&display=swap');
@@ -101,19 +55,22 @@ a:hover{
 
 
 
-* {
+html {
   box-sizing: border-box;
 }
 
 .nav {
   background-color: #e9e7e7;
   position: fixed;
-  box-shadow: rgb(8 49 112 / 24%) 0px 2px 8px 0px;
   top: 0;
   width: 100%;
   z-index: 1000;
+  height: 60px; /* Yüksekliği sabitle */
+  display: flex;
+  justify-content: space-between; /* İçerikleri sağa ve sola dağıtır */
+  align-items: center; /* İçerikleri dikeyde ortalar */
+  /* padding: 0 20px; */
   box-shadow: rgb(51, 51, 51) 0px 2px 8px 0px;
-  height: 60px;
 }
 
 .nav > .nav-header {
@@ -132,13 +89,36 @@ a:hover{
 
 .nav > .nav-links {
   display: flex;
-  /* display: inline;
-  float: right;
-  font-size: 18px; */
+  align-items: center; /* Dikeyde ortalama */
+  margin-left: auto; /* Sağ tarafa yaslamak için */
   justify-content: flex-end;
-  margin-left: 40px;
+  /* margin-left: 40px; */
 }
 
+.nav-links li {
+  list-style: none;
+  margin-left: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  padding: 15px;
+  font-family: 'Bebas Neue', cursive;
+}
+
+@media (max-width: 600px) {
+  .nav-links {
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+
+}
 
 .nav-header, .nav-links, .nav-exit {
   display: flex;
@@ -147,9 +127,7 @@ a:hover{
 .nav-links {
   flex-grow: 1; /* Diğer öğelerin alanını tamamen kaplamasını sağlar */
 }
-.nav-exit {
-  padding-right: 20px; /* Sağ taraftan öğeler arasına boşluk bırakmak için */
-}
+
 .nav-exit a {
   text-decoration: none;
   cursor: pointer;
@@ -222,14 +200,15 @@ a:hover{
     position: absolute;
     display: block;
     width: 100%;
-    background-color: #ffffff;
+    background-color: #e9e7e7;
     height: 0px;
     transition: all 0.3s ease-in;
     overflow-y: hidden;
     top: 50px;
     left: 0px;
     margin-left: 0px;
-    
+    box-shadow: rgb(51, 51, 51) 0px 2px 3px 0px;
+
     z-index: 2;
     text-align: center
   }
@@ -241,7 +220,7 @@ a:hover{
     height: 0px;
   }
   .nav > #nav-check:checked ~ .nav-links {
-    height: 165px;
+    height: 150px;
     overflow-y: auto;
     margin-top: 0.6em;
   }

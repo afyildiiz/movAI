@@ -36,7 +36,7 @@ body {
   background-image: var(--body-bg);
   font-family: 'Roboto', sans-serif;
   color: white;
-  padding-top: 4rem; /* Navbar'ın yüksekliğini dengelemek için */
+  padding-top: 4rem;
 
 }
 
@@ -47,7 +47,6 @@ body {
   width: 85%;
   max-width: 1200px;
   height: calc(100% - 50px);
-  /* border: var(--border); */
   border-radius: 15px;
   background: var(--msger-bg);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
@@ -89,8 +88,8 @@ body {
 }
 
 .msger-header-title:hover {
-  animation: shake 0.5s; /* Animasyon adı, süresi ve diğer özellikleri */
-  animation-iteration-count: infinite; /* Animasyonu sürekli tekrarla */
+  animation: shake 0.5s;
+  animation-iteration-count: infinite; 
 }
 
 @keyframes shake {
@@ -138,13 +137,18 @@ body {
 .left-msg .msg-bubble {
   border-bottom-left-radius: 0;
 }
+.left-msg{
+  flex-wrap: wrap;
+
+}
 
 .right-msg {
   flex-direction: row-reverse;
+  flex-wrap: wrap;
 }
 
 .right-msg .msg-bubble {
-  background: var(--right-msg-bg);
+  background: black;
   color: #fff;
   border-bottom-right-radius: 0;
 }
@@ -182,7 +186,6 @@ body {
   background: #262e35;
   color: #fff;
   cursor: pointer;
-  /* font-size: 1.1em; */
   font-weight: bold;
   transition: background 0.3s ease;
 }
@@ -240,20 +243,24 @@ body {
 
 
 
-/* loading dots */
+.msg-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 
 .loading-dots {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
-  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .loading-dots span {
-  width: 10px;
-  height: 10px;
-  margin: 0 5px;
+  width: 8px;
+  height: 8px;
+  margin: 0 2px;
   background-color: #333;
   border-radius: 50%;
   display: inline-block;
@@ -276,3 +283,8 @@ body {
     transform: translateY(-10px);
   }
 }
+
+
+
+
+
