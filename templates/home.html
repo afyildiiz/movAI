@@ -6,66 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="../static/css/home.css">
-    <title>Chatbot - Brave Coder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <title>MovAI Chatbot</title>
 </head>
 <body>
+  <!-- {% include 'navbar.html' %} -->
+
+  <h1 class="header header--shadow" data-text="MovAI">MovAI</h1>
   <section class="msger">
     <header class="msger-header">
-      <div class="msger-header-title">
-        <i class="fas fa-comment-alt"></i> Movai
-      </div>
-      <div class="msger-header-options">
-        <span><i class="fas fa-cog"></i></span>
+      <div class="msger-header-title" >
+        Debussy Bot 4.5+
       </div>
     </header>
   
     <main class="msger-chat">
-      <div class="msg left-msg">
+      <div class="msg left-msg"></div>
+      <div class="msg right-msg"></div>
 
-  
-
-      </div>
-  
-      <div class="msg right-msg">
-
-  
+      <!-- dot spinner -->
+      <div id="loading" class="loading-dots" style="display: none;">
+        <span></span><span></span><span></span>
       </div>
     </main>
   
     <form class="msger-inputarea">
       <input type="text" class="msger-input" placeholder="Enter your message...">
-      <button type="submit" class="msger-send-btn">Send</button>
+      <button type="submit" class="msger-send-btn">
+        Send
+      </button>
     </form>
   </section>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-const form = document.querySelector('.msger-inputarea');
-const input = document.querySelector('.msger-input');
-const chat = document.querySelector('.msger-chat');
+  const form = document.querySelector('.msger-inputarea');
+  const input = document.querySelector('.msger-input');
+  const chat = document.querySelector('.msger-chat');
 
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
+  form.addEventListener('submit', (event) => {
+      event.preventDefault();
 
-    const userMessage = input.value;
-    input.value = ''; // Input alanını temizle
+      const userMessage = input.value;
+      input.value = ''; // Input alanını temizle
 
-    // Kullanıcı mesajını chat'e ekle
-    appendMessage("right", userMessage);
+      // Kullanıcı mesajını chat'e ekle
+      appendMessage("right", userMessage);
 
-    // `/get_response` endpoint'ine POST isteği gönder
-    fetch('/get_response', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `user_input=${userMessage}`
-    })
-    .then(response => response.text()) // Yanıtı metin olarak al
-    .then(botResponse => {
-        // Bot yanıtını chat'e ekle
-        appendMessage( "left", botResponse);
-    });
-});
+      document.getElementById('loading').style.display = 'flex';
+
+      // `/get_response` endpoint'ine POST isteği gönder
+      fetch('/get_response', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `user_input=${userMessage}`
+      })
+      .then(response => response.text()) // Yanıtı metin olarak al
+      .then(botResponse => {
+          // hide loading animation
+          document.getElementById('loading').style.display = 'none';
+
+          // Bot yanıtını chat'e ekle
+          appendMessage( "left", botResponse);
+      });
+  });
 
 function appendMessage(side, text) {
     // Kullanıcı ve bot için farklı resimler tanımlayın
