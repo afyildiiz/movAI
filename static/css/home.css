@@ -36,6 +36,8 @@ body {
   background-image: var(--body-bg);
   font-family: 'Roboto', sans-serif;
   color: white;
+  padding-top: 4rem; /* Navbar'ın yüksekliğini dengelemek için */
+
 }
 
 .msger {
@@ -49,6 +51,7 @@ body {
   border-radius: 15px;
   background: var(--msger-bg);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+
 }
 
 .msger-header {
@@ -175,11 +178,11 @@ body {
 }
 
 .msger-send-btn {
-  margin-left: 10px;
+  margin-left: 5px;
   background: #262e35;
   color: #fff;
   cursor: pointer;
-  font-size: 1.1em;
+  /* font-size: 1.1em; */
   font-weight: bold;
   transition: background 0.3s ease;
 }
@@ -194,7 +197,7 @@ body {
 
 .header {
   position: absolute;
-  top: 10px;
+  top: 65px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 3rem;
@@ -229,6 +232,9 @@ body {
   }
   .msger-header{
     padding:15px ;
+  }
+  .header-right{
+    font-size: 10px;
   }
 }
 
