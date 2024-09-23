@@ -93,7 +93,7 @@ def get_cohere_response(prompt):
     response = co.generate(
         model='command-xlarge-nightly',
         prompt=prompt,
-        max_tokens=300,
+        max_tokens=450,
         temperature=0.7,
         k=0,
         p=0.75,
@@ -123,60 +123,95 @@ def get_response():
 
     Use the TMDB API to provide an appropriate response.
 
-    If the user is asking for information about a movie or TV show, make sure to include the following information and please structure your response under the following subheadings:
-
+    If the user requests information about a movie or TV series, first find the movie or TV series using the TMDB API. Then, make sure it contains the following information and please structure your response under the following subheadings:
     * Movie Details
     * Title: 
     * Overview: 
     * Release Date: 
     * Genres: 
     * Production Countries: 
-    * TMDB Link: (in the format https://www.themoviedb.org/movie/{{tmdb_id}})
-    * Streaming Platforms: (if possible)
+    * TMDB Link: (in the format https://www.themoviedb.org/movie/{{movie_id}})
+    * Streaming Platforms: (if exist, must be)
     If the user requests popular movies or the best movies by a specific genre, provide the relevant lists.
 
     If you don't understand the user's request, politely ask for more information or clarification.
+
+    You should make the html view as follows and never break this rule:
+
+        <h3>Movie Details</h3>
+        </br>
+    <ul>
+        <li><strong>Title:</strong> Narcos</li>
+        </br>
+        <li><strong>Overview:</strong> 'Narcos' is an exciting and gritty crime drama series...</li>
+        </br>
+        <li><strong>Release Date:</strong> August 28, 2015</li>
+        </br>
+        <li><strong>Genres:</strong> Crime, Drama, Biography</li>
+        </br>
+        <li><strong>Production Countries:</strong> United States, Colombia</li>
+        </br>
+        <li><strong>Streaming Platforms:</strong> Netflix, Disney+ </li>
+        </br>
+
+    </ul>
+
+    <h2>Popular Movies:</h2>
+    </br>
+    <ul>
+        <li><strong>Inception</strong><br />Release Date: July 16, 2010</li>
+        </br>
+        <li><strong>The Dark Knight</strong><br />Release Date: July 18, 2008</li>
+        </br>
+    </ul>
     """
 
     response = get_cohere_response(prompt)
 
-    # (İsteğe bağlı) Cohere'un verdiği yanıtı ayrıştırıp TMDB API çağrıları yapabilirsiniz
-    # ...
+    # # Yanıtı ayrıştır ve alt başlıkları bul
+    # subtitles = response.split('**')
+    # formatted_response = ''
 
-    # Yanıtı ayrıştır ve alt başlıkları bul
-    subtitles = response.split('**')
-    formatted_response = ''
+    # for subtitle in subtitles:
+    #     if subtitle.strip():  # Boş alt başlıkları atla
+    #         lines = subtitle.strip().split('\n')
+    #         title = lines[0].strip()  # İlk satır alt başlık
+    #         content_lines = lines[1:]  # Geri kalan satırlar içerik
 
-    for subtitle in subtitles:
-        if subtitle.strip():  # Boş alt başlıkları atla
-            lines = subtitle.strip().split('\n')
-            title = lines[0].strip()  # İlk satır alt başlık
-            content_lines = lines[1:]  # Geri kalan satırlar içerik
+    #         # İçeriği düzgün bir şekilde birleştir ve HTML etiketleriyle biçimlendir
+    #         content = ""
+    #         for line in content_lines:
+    #             stripped_line = line.strip()
+    #             if stripped_line:
+    #                 if stripped_line.startswith("*"):
+    #                     # Liste öğelerini kalın başlık ve içerik olarak ayır
+    #                     parts = stripped_line[1:].strip().split(': ', 1)
+    #                     if len(parts) == 2:
+    #                         key, value = parts
+    #                         content += f"<li><strong>{key}:</strong> {value}</li>"
+    #                     else:
+    #                         content += f"<li>{stripped_line[1:].strip()}</li>"
+    #                 elif stripped_line.startswith("TMDB Linki: "):
+    #                     link = stripped_line.substring("TMDB Linki: ".length).trim()
+    #                     content += f'<div><a href="{link}" target="_blank">Visit TMDB</a></div>'
+    #                 else:
+    #                     content += f"<p>{stripped_line}</p>" 
 
-            # İçeriği düzgün bir şekilde birleştir
-            content = ""
-            for line in content_lines:
-                stripped_line = line.strip()
-                if stripped_line:
-                    if stripped_line.startswith("*"):  # Eğer satır "*" ile başlıyorsa, liste öğesi olarak biçimlendir
-                        content += f"<li>{stripped_line[1:].strip()}</li>"
-                    else:
-                        content += stripped_line + "<br>"
+    #         # Sadece # ile başlayan başlıkları <h4> etiketine dönüştür, diğerlerini olduğu gibi bırak
+    #         if title.startswith('#'):
+    #             formatted_response += f'<br><h4>{title[1:].strip()}</h4>'  # Alt başlıktan önce boşluk ekle
+    #         else:
+    #             formatted_response += f'<p>{title}</p>' 
 
-            # Sadece # ile başlayan başlıkları <h4> etiketine dönüştür
-            if title.startswith('#'):
-                formatted_response += f'<h4>{title[1:].strip()}</h4>' 
-            else:
-                formatted_response += f'<div>{title}</div>' 
+    #         if content.startswith("<li>"):
+    #             formatted_response += f'<ul>{content}</ul>'
+    #         else:
+    #             formatted_response += content 
 
-            if content.startswith("<li>"):
-                formatted_response += f'<ul>{content}</ul>'
-            else:
-                formatted_response += f'<div>{content}</div>'
+    #         # formatted_response += '<br>'  # Her alt başlıktan sonra boşluk ekleme (artık gerek yok)
 
-            formatted_response += '<br>'  # Her alt başlıktan sonra boşluk ekle
+    return response 
 
-    return formatted_response 
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8000)
