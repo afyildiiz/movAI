@@ -65,10 +65,10 @@ html {
   top: 0;
   width: 100%;
   z-index: 1000;
-  height: 60px; /* Yüksekliği sabitle */
+  height: 60px;
   display: flex;
-  justify-content: space-between; /* İçerikleri sağa ve sola dağıtır */
-  align-items: center; /* İçerikleri dikeyde ortalar */
+  justify-content: space-between;
+  align-items: center;
   /* padding: 0 20px; */
   box-shadow: rgb(51, 51, 51) 0px 2px 8px 0px;
 }
@@ -89,10 +89,10 @@ html {
 
 .nav > .nav-links {
   display: flex;
-  align-items: center; /* Dikeyde ortalama */
-  margin-left: auto; /* Sağ tarafa yaslamak için */
+  align-items: center;
+  margin-left: auto;
   justify-content: flex-end;
-  /* margin-left: 40px; */
+  /* margin-left: 40xpx; */
 }
 
 .nav-links li {
@@ -125,7 +125,7 @@ html {
   align-items: center;
 }
 .nav-links {
-  flex-grow: 1; /* Diğer öğelerin alanını tamamen kaplamasını sağlar */
+  flex-grow: 1; 
 }
 
 .nav-exit a {
@@ -148,10 +148,6 @@ html {
 
 
 .nav > .nav-links > a {
-  /* display: inline-block;
-  padding: 15px 15px 15px 15px;
-  text-decoration: none;
-  color: #efefef; */
 
   display: inline-block;
 
@@ -220,13 +216,11 @@ html {
     height: 0px;
   }
   .nav > #nav-check:checked ~ .nav-links {
-    height: 150px;
+    height: 160px;
     overflow-y: auto;
     margin-top: 0.6em;
   }
   .nav-exit{
-    /* position: absolute;
-    right: 25px; */
     margin-left: 1em;
     position: absolute;
     right: 3em;

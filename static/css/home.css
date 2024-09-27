@@ -161,13 +161,14 @@ body {
 }
 
 .msger-inputarea * {
-  padding: 10px;
+  /* padding: 10px; */
   border: none;
   border-radius: 25px;
   font-size: 1em;
 }
 
 .msger-input {
+  padding: 10px;
   flex: 1;
   background: #ddd;
   transition: box-shadow 0.2s ease;
@@ -182,6 +183,7 @@ body {
 }
 
 .msger-send-btn {
+  width: 45px;
   margin-left: 5px;
   background: #262e35;
   color: #fff;
@@ -224,6 +226,7 @@ body {
 
 .msg-info-time{
   color: #90A4AE;
+  font-size: 10px;
 }
 
 @media screen and (max-width:490px){
@@ -251,17 +254,20 @@ body {
 }
 
 .loading-dots {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 10px;
+  position: absolute;
+  bottom: 5px; 
+  right: 10px; */
 }
 
 .loading-dots span {
   width: 8px;
   height: 8px;
   margin: 0 2px;
-  background-color: #333;
+  background-color: #ffffff;
   border-radius: 50%;
   display: inline-block;
   animation: loading-dots 1s infinite ease-in-out;

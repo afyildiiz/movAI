@@ -3,22 +3,52 @@ import requests
 import cohere
 from flask import Flask, request, render_template
 from dotenv import load_dotenv
-
+from flask import Flask
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 load_dotenv()
+
+# SMTP AYARLARI
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True 
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+
+mail = Mail(app)
 
 tmdb_api_key = os.environ.get('TMDB_API_KEY')
 cohere_api_key = os.environ.get('COHERE_API_KEY')
 
 co = cohere.Client(cohere_api_key)
 
-@app.route("/contact")
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+@app.route("/contact",methods=['GET','POST'])
 def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        comment = request.form['message']
+
+        # eposta mesajını oluştur
+        msg = Message('Yeni İletişim Formu Gönderimi', sender=email, recipients=[os.environ.get('MAIL_USERNAME')])
+        msg.body = f"İsim: {name}\nE-posta: {email}\n\n {comment}"
+
+        # E-postayı gönder
+        mail.send(msg)
+
+        feedback= "Message has been sent!"
+        return render_template('contact.html', data=feedback)  # data değişkenini gönder
+    
     return render_template("contact.html")
 
+
 def get_movie_details(movie_title):
-    """TMDB API'sinden film detaylarını alır."""
+    """tmdb api'sinden film detaylarını alma"""
 
     base_url = "https://api.themoviedb.org/3"
     search_url = f"{base_url}/search/movie"
@@ -43,8 +73,7 @@ def get_movie_details(movie_title):
         genres = [genre["name"] for genre in details["genres"]]
         production_countries = [country["name"] for country in details["production_countries"]]
 
-        # Streaming platformlarını almak için ayrı bir çağrı yapın (isteğe bağlı)
-        # ... (Bu kısım henüz tamamlanmadı, gelecekte ekleyebilirsiniz)
+        # streaming platformlarını almak için ayrı bir çağrı yapma
         streaming_platforms = [] 
 
         return {
@@ -60,7 +89,7 @@ def get_movie_details(movie_title):
         return None
 
 def get_popular_movies():
-    """TMDB API'sinden popüler filmleri alır."""
+    """tmdb api'sinden popüler filmleri alma"""
 
     base_url = "https://api.themoviedb.org/3"
     popular_url = f"{base_url}/movie/popular"
@@ -82,17 +111,15 @@ def get_popular_movies():
     return popular_movies
 
 def get_top_rated_movies_by_genre(genre):
-    """TMDB API'sinden belirli bir türe göre en iyi filmleri alır."""
+    """tmdb api'sinden belirli bir türe göre en iyi filmleri alma"""
 
-    # İlk olarak, tür adını tür ID'sine dönüştürmeniz gerekir
-    # Bunun için TMDB API'sindeki /genre/movie/list endpoint'ini kullanabilirsiniz.
-    # ... (Bu kısım henüz tamamlanmadı, gelecekte ekleyebilirsiniz)
+    # ilk olarak, tür adını tür idsine dönüştürecegiz
 
     top_rated_movies = [] 
     return top_rated_movies
 
 def get_cohere_response(prompt):
-    """Cohere API'sinden yanıt alır."""
+    """Cohere API'sinden yanıt alma"""
 
     response = co.generate(
         model='command-xlarge-nightly',
@@ -117,102 +144,62 @@ def home():
 def get_response():
     user_input = request.form["user_input"]
 
-    # Cohere'a gönderilecek istemi (prompt) oluştur
+    # Cohere'a gönderilecek promptu oluştur
     prompt = f"""
-    You are a movie and TV show chatbot. Users will ask you for movie or TV show titles, and you will provide them with relevant information using the TMDB API. You can also list popular movies and the best movies by genre.
+        You are a movie and TV show chatbot. Users will ask you for movie or TV show titles, and you will provide them with relevant information using the TMDB API. You can also list popular movies and the best movies by genre.
 
-    Respond to the user in an understanding manner and perhaps suggest another search.
+        Respond to the user in an understanding manner and perhaps suggest another search.
 
-    User's request: {user_input}
+        User's request: {user_input}
 
-    Use the TMDB API to provide an appropriate response.
+        Use the TMDB API to provide an appropriate response.
 
-    If the user requests information about a movie or TV series, first find the movie or TV series using the TMDB API. Then, make sure it contains the following information and please structure your response under the following subheadings:
-    * Movie Details
-    * Title: 
-    * Overview: 
-    * Release Date: 
-    * Genres: 
-    * Production Countries: 
-    * TMDB Link: (in the format https://www.themoviedb.org/movie/{{movie_id}})
-    * Streaming Platforms: (if exist, must be)
-    If the user requests popular movies or the best movies by a specific genre, provide the relevant lists.
+        If the user requests information about a movie or TV series, first find the movie or TV series using the TMDB API. Then, make sure it contains the following information and please structure your response under the following subheadings:
+        * Movie Details
+        * Title: 
+        * Overview: 
+        * Release Date: 
+        * Genres: 
+        * Production Countries: 
+        * TMDB Link: (in the format <a href="https://www.themoviedb.org/movie/<movie_id>" target="_blank">TMDB Page</a>)
+        * Streaming Platforms: (if exist, must be)
+        If the user requests popular movies or the best movies by a specific genre, provide the relevant lists.
 
-    If you don't understand the user's request, politely ask for more information or clarification.
+        If you don't understand the user's request, politely ask for more information or clarification.
 
-    You should make the html view as follows and never break this rule:
+        You should make the html view as follows and never break this rule:
 
-        <h3>Movie Details</h3>
-        </br>
-    <ul>
-        <li><strong>Title:</strong> Narcos</li>
-        </br>
-        <li><strong>Overview:</strong> 'Narcos' is an exciting and gritty crime drama series...</li>
-        </br>
-        <li><strong>Release Date:</strong> August 28, 2015</li>
-        </br>
-        <li><strong>Genres:</strong> Crime, Drama, Biography</li>
-        </br>
-        <li><strong>Production Countries:</strong> United States, Colombia</li>
-        </br>
-        <li><strong>Streaming Platforms:</strong> Netflix, Disney+ </li>
-        </br>
+            <h3>Movie Details</h3>
+            </br>
+        <ul>
+            <li><strong>Title:</strong> Narcos</li>
+            </br>
+            <li><strong>Overview:</strong> 'Narcos' is an exciting and gritty crime drama series...</li>
+            </br>
+            <li><strong>Release Date:</strong> August 28, 2015</li>
+            </br>
+            <li><strong>Genres:</strong> Crime, Drama, Biography</li>
+            </br>
+            <li><strong>Production Countries:</strong> United States, Colombia</li>
+            </br>
+            <li><strong>TMDB Link:</strong> <a href="https://www.themoviedb.org/movie/63351" target="_blank">TMDB Page</a> </li>
+            </br>
+            <li><strong>Streaming Platforms:</strong> Netflix, Disney+ </li>
+            </br>
 
-    </ul>
+        </ul>
 
-    <h2>Popular Movies:</h2>
-    </br>
-    <ul>
-        <li><strong>Inception</strong><br />Release Date: July 16, 2010</li>
+        <h2>Popular Movies:</h2>
         </br>
-        <li><strong>The Dark Knight</strong><br />Release Date: July 18, 2008</li>
-        </br>
-    </ul>
+        <ul>
+            <li><strong>Inception</strong><br />Release Date: July 16, 2010</li>
+            </br>
+            <li><strong>The Dark Knight</strong><br />Release Date: July 18, 2008</li>
+            </br>
+        </ul>
     """
 
     response = get_cohere_response(prompt)
-
-    # # Yanıtı ayrıştır ve alt başlıkları bul
-    # subtitles = response.split('**')
-    # formatted_response = ''
-
-    # for subtitle in subtitles:
-    #     if subtitle.strip():  # Boş alt başlıkları atla
-    #         lines = subtitle.strip().split('\n')
-    #         title = lines[0].strip()  # İlk satır alt başlık
-    #         content_lines = lines[1:]  # Geri kalan satırlar içerik
-
-    #         # İçeriği düzgün bir şekilde birleştir ve HTML etiketleriyle biçimlendir
-    #         content = ""
-    #         for line in content_lines:
-    #             stripped_line = line.strip()
-    #             if stripped_line:
-    #                 if stripped_line.startswith("*"):
-    #                     # Liste öğelerini kalın başlık ve içerik olarak ayır
-    #                     parts = stripped_line[1:].strip().split(': ', 1)
-    #                     if len(parts) == 2:
-    #                         key, value = parts
-    #                         content += f"<li><strong>{key}:</strong> {value}</li>"
-    #                     else:
-    #                         content += f"<li>{stripped_line[1:].strip()}</li>"
-    #                 elif stripped_line.startswith("TMDB Linki: "):
-    #                     link = stripped_line.substring("TMDB Linki: ".length).trim()
-    #                     content += f'<div><a href="{link}" target="_blank">Visit TMDB</a></div>'
-    #                 else:
-    #                     content += f"<p>{stripped_line}</p>" 
-
-    #         # Sadece # ile başlayan başlıkları <h4> etiketine dönüştür, diğerlerini olduğu gibi bırak
-    #         if title.startswith('#'):
-    #             formatted_response += f'<br><h4>{title[1:].strip()}</h4>'  # Alt başlıktan önce boşluk ekle
-    #         else:
-    #             formatted_response += f'<p>{title}</p>' 
-
-    #         if content.startswith("<li>"):
-    #             formatted_response += f'<ul>{content}</ul>'
-    #         else:
-    #             formatted_response += content 
-
-    #         # formatted_response += '<br>'  # Her alt başlıktan sonra boşluk ekleme (artık gerek yok)
 
     return response 
 
