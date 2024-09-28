@@ -21,11 +21,22 @@
         <div class="nav-links">
             <a href="{{ url_for('home')}}">Homepage</a>
             <a href="{{ url_for('about')}}">About</a>
-            <a href="{{ url_for('contact')}}">Contact</a>
+            <!-- <a href="{{ url_for('contact')}}">Contact</a> -->
         </div>
         <div class="nav-exit">
 
           <div class = "down_note"></div>
         </div>
     </div>
+
+    <script>
+      const navLinks = document.querySelectorAll('.nav-links a'); // Tüm navigasyon linklerini seç
+
+      navLinks.forEach(link => {
+          link.addEventListener('click', function() {
+              navLinks.forEach(navLink => navLink.classList.remove('active')); // Diğer linklerden "active" sınıfını kaldır
+              this.classList.add('active'); // Tıklanan linke "active" sınıfını ekle
+          });
+      });
+    </script>
 

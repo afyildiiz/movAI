@@ -23,7 +23,7 @@ a {
   transition: all 0.5s ease-in-out;
   font-family: 'Bebas Neue', cursive;
   color: #a0a0a0;
-  font-size: 20px;
+  /* font-size: 20px; */
   letter-spacing: 0.5px;
   transition: all 0.6s ease;
   padding: 0 15px;
@@ -216,7 +216,7 @@ html {
     height: 0px;
   }
   .nav > #nav-check:checked ~ .nav-links {
-    height: 160px;
+    height: 110px;
     overflow-y: auto;
     margin-top: 0.6em;
   }
@@ -229,7 +229,6 @@ html {
 }
 
 
-
 .active{
   background: #ecedee;
   color: rgb(37, 79, 250);
@@ -240,7 +239,6 @@ html {
 
 
 select {
-  /* Reset Select */
   appearance: none;
   outline: 10px red;
   border: 0;
@@ -253,11 +251,10 @@ select {
   background-image: none;
   cursor: pointer;
 }
-/* Remove IE arrow */
 select::-ms-expand {
   display: none;
 }
-/* Custom Select wrapper */
+
 .select {
   position: relative;
   display: flex;
@@ -266,7 +263,6 @@ select::-ms-expand {
   border-radius: .25em;
   overflow: hidden;
 }
-/* Arrow */
 .select::after {
   content: '\25BC';
   position: absolute;
@@ -277,7 +273,6 @@ select::-ms-expand {
   transition: .25s all ease;
   pointer-events: none;
 }
-/* Transition */
 .select:hover::after {
   color: #f39c12;
 }

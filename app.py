@@ -23,12 +23,12 @@ cohere_api_key = os.environ.get('COHERE_API_KEY')
 
 co = cohere.Client(cohere_api_key)
 
-@app.route("/about")
-def about():
-    return render_template("about.html")
-
-@app.route("/contact",methods=['GET','POST'])
+@app.route("/contact")
 def contact():
+    return render_template("contact.html")
+
+@app.route("/about",methods=['GET','POST'])
+def about():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
@@ -42,9 +42,9 @@ def contact():
         mail.send(msg)
 
         feedback= "Message has been sent!"
-        return render_template('contact.html', data=feedback)  # data değişkenini gönder
+        return render_template('about.html', data=feedback)  # data değişkenini gönder
     
-    return render_template("contact.html")
+    return render_template("about.html")
 
 
 def get_movie_details(movie_title):
@@ -136,7 +136,7 @@ def get_cohere_response(prompt):
 
     return response.generations[0].text.strip()
 
-@app.route("/home")
+@app.route("/")
 def home():
     return render_template('home.html')
 

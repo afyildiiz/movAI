@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
 *{
-    font-family: "Bebas Neue", sans-serif;
+    /* font-family: "Bebas Neue", sans-serif; */
     font-weight: 400;
 }
 
@@ -11,7 +11,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 99vh;
+    /* min-height: 99vh; */
 }
 .navigation{
     height: 60px;
@@ -19,7 +19,6 @@
 
 .input {
     font-family: "SF Pro";
-    /* max-width: 190px; */
     width: 100%;
     padding: 0.875rem;
     font-size: 1rem;
@@ -41,12 +40,11 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh; */
-    background: url('../img/background.webp');
+    /* background: url('../img/background.webp'); */
 }
 
 .container {
     display: flex;
-    width: 1000px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: rgb(51, 51, 51) 0px 2px 8px 0px;
@@ -54,7 +52,7 @@
 
 .contact-form, .social-media {
     width: 50%;
-    padding: 30px;
+    padding: 20px;
     box-sizing: border-box;
     /* display: block; */
 }
@@ -82,10 +80,10 @@ button {
     font-weight: 700;
     letter-spacing: .8px;
     line-height: 20px;
-    margin: 0;
+    margin-top: 1rem;
     outline: none;
     overflow: visible;
-    padding: 13px 19px;
+    padding: 9px 14px;
     text-align: center;
     text-transform: uppercase;
     touch-action: manipulation;
@@ -145,7 +143,7 @@ button {
 }
 
 .social-media a {
-    display: inline-block;
+    /* display: inline-block; */
     width: 40px;
     height: 40px;
     line-height: 40px;
@@ -195,3 +193,18 @@ button {
 }
 
 
+.spinner {
+    display: inline-block; 
+    vertical-align: middle; 
+    margin-left: 10px;
+  }
+  
+  .spinner .fa-spinner {
+    font-size: 20px; 
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

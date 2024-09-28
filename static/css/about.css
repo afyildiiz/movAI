@@ -1,138 +1,148 @@
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;600&display=swap");
-body {
-  font-family: "Oswald", sans-serif;
-  background-color: #212121;
-}
-body section {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-body section .row {
-  align-items: center;
-  height: 100vh;
+@import url(https://fonts.googleapis.com/css?family=Josefin+Slab:400,700);
+
+* {
+  /* margin:0; */
+  padding:0;
+  list-style:none;
+  text-decoration:none;
+  box-sizing:border-box;
+  /* font-family: "Lato", sans-serif !important; */
 }
 
-.card {
+html, body{
+  width:100%;
+  height:100%;
+}
+
+
+.wrapper {
+  transform-style: preserve-3d;
+  margin: 0 auto;
+  height:400px;
   position: relative;
-  height: 400px;
+  top: 0;left: 0;right: 0;bottom: 0;
+  margin: auto;
+}
+
+.wrapper:after {
+  position: relative;
+  top: 100%;
+  left: 0;
+  z-index: -1;
+  display: block;
+  content: '';
+  height: 22px;
   width: 100%;
-  margin: 10px 0;
-  transition: ease all 2.3s;
-  perspective: 1200px;
+  background: url('http://www.kikk.be/2015/files/templates/kikk2015/public/assets/images/floating-card-shadow.png') no-repeat;
+  background-size: 100%;
 }
-.card:hover .cover {
-  transform: rotateX(0deg) rotateY(-180deg);
+
+@media (max-width: 820px) {
+
+  .content,.contentt,.contennt {
+    position: absolute;
+    right: -60px;
+  }
+
+  .elem {
+    width: 100%; /* Her bir kartı tam genişliğe ayarla */
+    margin-bottom: 20px; /* Kartlar arasına boşluk ekle */
+  }
 }
-.card:hover .cover:before {
-  transform: translateZ(30px);
+
+.wrapper.elem {
+  width: 350px; /* Kartların genişliğini belirleyin */
+  margin: 0 auto; /* Kartları yatayda ortala */
 }
-.card:hover .cover:after {
-  background-color: black;
+
+#tour > div {
+  display: flex;
+  justify-content: center; /* Kartları içeren divi yatayda ortala */
+  flex-wrap: wrap; 
 }
-.card:hover .cover h1 {
-  transform: translateZ(100px);
+
+#tour{
+  box-shadow: rgb(51, 51, 51) 0px 2px 8px 0px;
+  padding: 14px;
 }
-.card:hover .cover .price {
-  transform: translateZ(60px);
-}
-.card:hover .cover a {
-  transform: translateZ(-60px) rotatey(-180deg);
-}
-.card .cover {
-  position: absolute;
+
+
+.bloc {
   height: 100%;
   width: 100%;
-  transform-style: preserve-3d;
-  transition: ease all 2.3s;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background: url(https://desktopography.net/wp-content/uploads/bfi_thumb/ALONE-34re7d3h27texnipm6f0u8.jpg) no-repeat center top;
+  position: relative;
 }
-.card .cover:before {
-  content: "";
+
+.content,.contentt,.contennt {
+  transform: translateZ(80px) scale(1);
+  -webkit-transform: translateZ(80px) scale(1);
+  height: 90%;
+  width: 250px;
   position: absolute;
-  border: 5px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  z-index: 2;
-  transition: ease all 2.3s;
-  transform-style: preserve-3d;
-  transform: translateZ(0px);
-}
-.card .cover:after {
-  content: "";
-  position: absolute;
+  margin:auto;
   top: 0px;
-  left: 0px;
   right: 0px;
   bottom: 0px;
-  z-index: 2;
-  transition: ease all 1.3s;
-  background: rgba(0, 0, 0, 0.4);
-}
-.card .cover.item-a {
-  background-image: url("../img/background.webp");
-}
-.card .cover.item-b {
-  background-image: url("https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=600&q=80");
-}
-.card .cover.item-c {
-  background-image: url("https://images.unsplash.com/photo-1525945518069-b924046d1385?auto=format&fit=crop&w=600&q=80");
-}
-.card .cover h1 {
-  font-weight: 600;
-  position: absolute;
-  bottom: 55px;
-  left: 50px;
-  color: white;
-  transform-style: preserve-3d;
-  transition: ease all 2.3s;
+  left: 0px;
+  padding:20px;
+  color: #fff;
   z-index: 3;
-  font-size: 3em;
-  transform: translateZ(0px);
 }
-.card .cover .price {
-  font-weight: 200;
-  position: absolute;
-  top: 55px;
-  right: 50px;
-  color: white;
-  transform-style: preserve-3d;
-  transition: ease all 2.3s;
-  z-index: 4;
-  font-size: 2em;
-  transform: translateZ(0px);
+
+.content2 {
+  transform: translateZ(40px) scale(1);
+  -webkit-transform: translateZ(40px) scale(1);
+  /* left: -80px; */
+  padding: 0;
+  z-index: 2;
+  background: url('../img/flaskblack.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover; 
+  border-radius: 20px;
+
+  /* background-attachment: fixed; */
 }
-.card .card-back {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: #0b0f08;
-  transform-style: preserve-3d;
-  transition: ease all 2.3s;
-  transform: translateZ(-1px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+.contennt2 {
+  transform: translateZ(40px) scale(1);
+  -webkit-transform: translateZ(40px) scale(1);
+  /* left: -80px; */
+  padding: 0;
+  z-index: 2;
+  background: url('../img/HTML-CSS-JS-Logo.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover; 
+  border-radius: 20px;
+
+  /* background-attachment: fixed; */
 }
-.card .card-back a {
-  transform-style: preserve-3d;
-  transition: ease transform 2.3s, ease background 0.5s;
-  transform: translateZ(-1px) rotatey(-180deg);
-  background: transparent;
-  border: 1px solid white;
-  font-weight: 200;
-  font-size: 1.3em;
-  color: white;
-  padding: 14px 32px;
-  outline: none;
+.contentt2{
+  transform: translateZ(40px) scale(1);
+  -webkit-transform: translateZ(40px) scale(1);
+  /* left: -80px; */
+  padding: 0;
+  z-index: 2;
+  background: url('../img/cohere_logo.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 20px;
+  /* background-attachment: fixed; */
+}
+
+footer{
+  box-shadow: rgb(51, 51, 51) 0px 2px 8px 0px;;
+}
+
+
+.portfolio{
   text-decoration: none;
+  
 }
-.card .card-back a:hover {
-  background-color: white;
-  color: #0b0f08;
+.portfolio::before{
+  background-color: transparent !important;
+  
 }

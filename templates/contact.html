@@ -1,107 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../static/css/contact.css">
-	
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/contact.css">
+
     <title>Contact</title>
 </head>
 
 <body>
-    <div class="navigation">
-        {% include 'navbar.html' %}
-    </div>
-<div class="wrapper">
+    <div class="wrapperr">
 
-    <div class="conwrap">
+        <div class="conwrap">
 
-    <div class="container">
-        <div class="contact-form">
+            <div class="container">
+                <div class="contact-form">
 
-            <h2 style="text-align: center;">Get In Touch With Me!</h2>
-            <form method="post">
-                <div>
-                    <label for="name">Name</label>
-                    <input type="text" id="name" class="input" name="name" required>
+                    <h2 style="text-align: center;">Get In Touch With Me!</h2>
+                    <form method="post">
+                        <div>
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="input" name="name" required>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" class="input" name="email" required>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" class="input" name="message" required></textarea>
+
+                        </div>
+                        <button id="sendButton" type="submit" value="SUBMIT">Send</button>
+                        <!-- SPINNER -->
+                        <div class="spinner" id="loadingSpinner" style="display: none;">
+                            <i class="fa fa-spinner fa-spin"></i> 
+                          </div>
+                          <div id="feedbackMessage" style="text-align: center;color: green;display: none;font-weight: 900;">Message has been sent! 
+                        </div>
+                    </form>
                 </div>
-                <div style="margin-top: 1rem;">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" class="input" name="email" required>
+                <div class="social-media">
+                    <h3 style="text-align: center;">Social Media</h3>
+                    <ul>
+                        <li><a href="https://www.linkedin.com/in/afyildiiz/" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 16 16"
+                                    id="linkedin">
+                                    <g fill="#1976D2">
+                                        <path
+                                            d="M0 5h3.578v11H0zM13.324 5.129c-.038-.012-.074-.025-.114-.036a2.32 2.32 0 0 0-.145-.028A3.207 3.207 0 0 0 12.423 5c-2.086 0-3.409 1.517-3.845 2.103V5H5v11h3.578v-6s2.704-3.766 3.845-1v7H16V8.577a3.568 3.568 0 0 0-2.676-3.448z">
+                                        </path>
+                                        <circle cx="1.75" cy="1.75" r="1.75"></circle>
+                                    </g>
+                                </svg>
+                            </a></li>
+                        <li><a href="https://github.com/afyildiiz/" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 16 16"
+                                    id="github">
+                                    <path
+                                        d="M7.999 0C3.582 0 0 3.596 0 8.032a8.031 8.031 0 0 0 5.472 7.621c.4.074.546-.174.546-.387 0-.191-.007-.696-.011-1.366-2.225.485-2.695-1.077-2.695-1.077-.363-.928-.888-1.175-.888-1.175-.727-.498.054-.488.054-.488.803.057 1.225.828 1.225.828.714 1.227 1.873.873 2.329.667.072-.519.279-.873.508-1.074-1.776-.203-3.644-.892-3.644-3.969 0-.877.312-1.594.824-2.156-.083-.203-.357-1.02.078-2.125 0 0 .672-.216 2.2.823a7.633 7.633 0 0 1 2.003-.27 7.65 7.65 0 0 1 2.003.271c1.527-1.039 2.198-.823 2.198-.823.436 1.106.162 1.922.08 2.125.513.562.822 1.279.822 2.156 0 3.085-1.87 3.764-3.652 3.963.287.248.543.738.543 1.487 0 1.074-.01 1.94-.01 2.203 0 .215.144.465.55.386A8.032 8.032 0 0 0 16 8.032C16 3.596 12.418 0 7.999 0z">
+                                    </path>
+                                </svg>
+                            </a></li>
+                        <li><a href="https://www.instagram.com/afyildiiz/" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 16 16"
+                                    id="instagram">
+                                    <linearGradient id="a" x1="1.464" x2="14.536" y1="14.536" y2="1.464"
+                                        gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#FFC107"></stop>
+                                        <stop offset=".507" stop-color="#F44336"></stop>
+                                        <stop offset=".99" stop-color="#9C27B0"></stop>
+                                    </linearGradient>
+                                    <path fill="url(#a)"
+                                        d="M11 0H5a5 5 0 0 0-5 5v6a5 5 0 0 0 5 5h6a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5zm3.5 11c0 1.93-1.57 3.5-3.5 3.5H5c-1.93 0-3.5-1.57-3.5-3.5V5c0-1.93 1.57-3.5 3.5-3.5h6c1.93 0 3.5 1.57 3.5 3.5v6z">
+                                    </path>
+                                    <linearGradient id="b" x1="5.172" x2="10.828" y1="10.828" y2="5.172"
+                                        gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#FFC107"></stop>
+                                        <stop offset=".507" stop-color="#F44336"></stop>
+                                        <stop offset=".99" stop-color="#9C27B0"></stop>
+                                    </linearGradient>
+                                    <path fill="url(#b)"
+                                        d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 6.5A2.503 2.503 0 0 1 5.5 8c0-1.379 1.122-2.5 2.5-2.5s2.5 1.121 2.5 2.5c0 1.378-1.122 2.5-2.5 2.5z">
+                                    </path>
+                                    <linearGradient id="c" x1="11.923" x2="12.677" y1="4.077" y2="3.323"
+                                        gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#FFC107"></stop>
+                                        <stop offset=".507" stop-color="#F44336"></stop>
+                                        <stop offset=".99" stop-color="#9C27B0"></stop>
+                                    </linearGradient>
+                                    <circle cx="12.3" cy="3.7" r=".533" fill="url(#c)"></circle>
+                                </svg>
+                            </a></li>
+                    </ul>
+                    <div class="information">
+                        <p>You can reach me via tel, e-mail or social media links!</p>
+                        <p><a style="display: inline !important;text-decoration: underline !important;"
+                                href="mailto:afyildiz@gmail.com">afyildiz@gmail.com</a></p>
+                        <p>
+                            <strong>tel: </strong>+90 (535) 236 1618
+                        </p>
+                        <p>
+                            Beykoz/Istanbul
+                        </p>
+                    </div>
                 </div>
-                <div style="margin-top: 1rem;">
-                    <label for="message">Your Message</label>
-                    <textarea id="message" class="input" name="message" required></textarea>   
 
-                </div>
-                <button type="submit" value="SUBMIT">Send</button>
-            </form>
-            <div style="text-align: center;color: green;">
-                {% if data %}
-                    <p><strong>{{ data }}</strong></p>
-                {% endif %}
+
             </div>
-
         </div>
-        <div class="social-media">
-            <h3 style="text-align: center;">Social Media</h3>
-            <ul>
-                <li><a href="https://www.linkedin.com/in/afyildiiz/">
-                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 16 16" id="linkedin">
-                        <g fill="#1976D2">
-                          <path d="M0 5h3.578v11H0zM13.324 5.129c-.038-.012-.074-.025-.114-.036a2.32 2.32 0 0 0-.145-.028A3.207 3.207 0 0 0 12.423 5c-2.086 0-3.409 1.517-3.845 2.103V5H5v11h3.578v-6s2.704-3.766 3.845-1v7H16V8.577a3.568 3.568 0 0 0-2.676-3.448z"></path>
-                          <circle cx="1.75" cy="1.75" r="1.75"></circle>
-                        </g>
-                      </svg>
-                </a></li>
-                <li><a href="https://github.com/afyildiiz/movAI">
-                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 16 16" id="github">
-                        <path d="M7.999 0C3.582 0 0 3.596 0 8.032a8.031 8.031 0 0 0 5.472 7.621c.4.074.546-.174.546-.387 0-.191-.007-.696-.011-1.366-2.225.485-2.695-1.077-2.695-1.077-.363-.928-.888-1.175-.888-1.175-.727-.498.054-.488.054-.488.803.057 1.225.828 1.225.828.714 1.227 1.873.873 2.329.667.072-.519.279-.873.508-1.074-1.776-.203-3.644-.892-3.644-3.969 0-.877.312-1.594.824-2.156-.083-.203-.357-1.02.078-2.125 0 0 .672-.216 2.2.823a7.633 7.633 0 0 1 2.003-.27 7.65 7.65 0 0 1 2.003.271c1.527-1.039 2.198-.823 2.198-.823.436 1.106.162 1.922.08 2.125.513.562.822 1.279.822 2.156 0 3.085-1.87 3.764-3.652 3.963.287.248.543.738.543 1.487 0 1.074-.01 1.94-.01 2.203 0 .215.144.465.55.386A8.032 8.032 0 0 0 16 8.032C16 3.596 12.418 0 7.999 0z"></path>
-                      </svg>
-                </a></li>
-                <li><a href="https://www.instagram.com/afyildiiz/">
-                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 16 16" id="instagram">
-                        <linearGradient id="a" x1="1.464" x2="14.536" y1="14.536" y2="1.464" gradientUnits="userSpaceOnUse">
-                          <stop offset="0" stop-color="#FFC107"></stop>
-                          <stop offset=".507" stop-color="#F44336"></stop>
-                          <stop offset=".99" stop-color="#9C27B0"></stop>
-                        </linearGradient>
-                        <path fill="url(#a)" d="M11 0H5a5 5 0 0 0-5 5v6a5 5 0 0 0 5 5h6a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5zm3.5 11c0 1.93-1.57 3.5-3.5 3.5H5c-1.93 0-3.5-1.57-3.5-3.5V5c0-1.93 1.57-3.5 3.5-3.5h6c1.93 0 3.5 1.57 3.5 3.5v6z"></path>
-                        <linearGradient id="b" x1="5.172" x2="10.828" y1="10.828" y2="5.172" gradientUnits="userSpaceOnUse">
-                          <stop offset="0" stop-color="#FFC107"></stop>
-                          <stop offset=".507" stop-color="#F44336"></stop>
-                          <stop offset=".99" stop-color="#9C27B0"></stop>
-                        </linearGradient>
-                        <path fill="url(#b)" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 6.5A2.503 2.503 0 0 1 5.5 8c0-1.379 1.122-2.5 2.5-2.5s2.5 1.121 2.5 2.5c0 1.378-1.122 2.5-2.5 2.5z"></path>
-                        <linearGradient id="c" x1="11.923" x2="12.677" y1="4.077" y2="3.323" gradientUnits="userSpaceOnUse">
-                          <stop offset="0" stop-color="#FFC107"></stop>
-                          <stop offset=".507" stop-color="#F44336"></stop>
-                          <stop offset=".99" stop-color="#9C27B0"></stop>
-                        </linearGradient>
-                        <circle cx="12.3" cy="3.7" r=".533" fill="url(#c)"></circle>
-                      </svg>
-                </a></li>
-                </ul>
-                <div class="information">
-                    <p>You can reach me via tel, e-mail or social media links!</p>
-                    <p><a style="display: inline !important;text-decoration: underline !important;" href="mailto:afyildiz@gmail.com">afyildiz@gmail.com</a></p>
-                    <p>
-                        <strong>tel: </strong>+90 (535) 236 1618
-                    </p>
-                    <p>
-                        Beykoz/Istanbul
-                    </p>
-                </div>
-        </div>
-
 
     </div>
-</div>
 
-</div>
+    <script>
+        const form = document.querySelector('form');
+        const sendButton = document.getElementById('sendButton');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const feedbackMessage = document.getElementById('feedbackMessage');
 
+
+        form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        sendButton.style.display = 'none';
+        loadingSpinner.style.display = 'inline-block'; 
+        feedbackMessage.style.display = 'none'; 
+
+        const formData = new FormData(form);
+
+        fetch('/about', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            loadingSpinner.style.display = 'none';
+            feedbackMessage.style.display = 'block';
+        })
+        .catch(error => {
+            loadingSpinner.style.display = 'none';
+            sendButton.style.display = 'inline-block';
+        });
+        });
+    </script>
 </body>
+
 </html>
