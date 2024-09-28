@@ -139,9 +139,16 @@ footer{
 
 
 .portfolio{
-  text-decoration: none;
-  
+  text-decoration:underline;
+  all: unset;
+  cursor: pointer;
+  transition: 0.3s ease all;
 }
+
+.portfolio:hover{
+  color: rgb(219, 137, 30);
+}
+
 .portfolio::before{
   background-color: transparent !important;
   

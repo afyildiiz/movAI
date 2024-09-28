@@ -242,6 +242,12 @@ body {
   .header-right{
     font-size: 10px;
   }
+  .msger-input {
+    width: 90%;
+    font-size: 10px;
+
+  }
+
 }
 
 
