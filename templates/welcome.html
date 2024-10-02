@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/welcome.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/css/about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+    <title>Welcome to MovAI!</title>
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+
+
+  <div class="parallax-container">
+    <div class="container">
+        <h2>MovAI</h2>
+        <p>a life united with ai</p>
+        <button href="#blank" type="button" class="btn btn--yellow">
+            <span class="btn__txt">Learn More</span>
+            <i class="btn__bg" aria-hidden="true"></i>
+            <i class="btn__bg" aria-hidden="true"></i>
+            <i class="btn__bg" aria-hidden="true"></i>
+            <i class="btn__bg" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
+<div id="blank" class="blank">
+  <div class="owText text-center" >Discover Movies & TV Shows with AI-Powered Precision</div>
+  <div class="description">
+    Receive movie and TV show recommendations tailored just for you based on your favorite genres, actors, or directors.
+  </div>
+
+  {% include 'card.html' %}
+  
+  </article>
+</div>
+
+<div class="container second">
+
+</div>
+
+<div class="blank2"></div>
+
+      <script>
+
+
+        document.addEventListener('mousemove', (e) => {
+    const x = e.clientX; // Mouse'un x koordinatı
+    const y = e.clientY; // Mouse'un y koordinatı
+
+    // Pencere genişliği ve yüksekliğini al
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // Arka plan pozisyonunu mouse konumuna göre ayarla
+    const xPercent = (x / windowWidth) * 100; // Yüzde olarak x konumu
+    const yPercent = (y / windowHeight) * 100; // Yüzde olarak y konumu
+
+    document.body.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+});
+
+
+document.addEventListener('mousemove', function(e) {
+  // Fare pozisyonunu al
+  let mouseX = e.clientX;
+  let mouseY = e.clientY;
+
+  // Ekran genişliği ve yüksekliği
+  let windowWidth = window.innerWidth;
+  let windowHeight = window.innerHeight;
+
+  // Parallax hareketini hesapla
+  let moveX = ((mouseX / windowWidth) * 50) - 25; // 50 piksel hareket alanı sağlıyoruz
+  let moveY = ((mouseY / windowHeight) * 50) - 25;
+
+  // Arka planı hareket ettir
+  document.querySelector('.container').style.backgroundPosition = `${moveX}px ${moveY}px`;
+  document.querySelector('.second').style.backgroundPosition= `${moveX}px ${moveY}px`;
+});
+
+
+document.querySelector('button[href="#blank"]').addEventListener('click', function(e) {
+    e.preventDefault(); // Varsayılan tıklama davranışını engelle
+
+    const target = document.querySelector('#blank'); // Hedef div
+    target.scrollIntoView({ behavior: 'smooth' }); // Hedef div'e kaydır
+});
+      </script>
+</body>
+
+</html>

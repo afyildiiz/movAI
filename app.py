@@ -23,9 +23,19 @@ cohere_api_key = os.environ.get('COHERE_API_KEY')
 
 co = cohere.Client(cohere_api_key)
 
+app.route("/card")
+def card():
+    return render_template('card.html')
+
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
+
+@app.route('/welcome')
+def welcome():
+    return render_template('welcome.html')
+
 
 @app.route("/about",methods=['GET','POST'])
 def about():
