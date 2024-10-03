@@ -95,12 +95,12 @@ a {
   width: 100%;
   min-height: 100vh;
   background-color: var(--color);
-  box-shadow: 0 0 2rem white;
+  /* box-shadow: 0 0 2rem white; */
 
 }
 .description {
-  font-size: 34px;
-  text-align: left;
+  font-size: 24px;
+  text-align: center;
   padding: 24px;
   color: wheat;
   text-shadow: 0 1px 0 #4a4a4e, -1px -1px 0 #4a4a4e,  -1px 0px 0 #343437, -2px 1px 0 #343437, -3px 2px 0 #313134, -4px 3px 0 #2f2f31, -5px 4px 0 #2c2c2f, -6px 5px 0 #2a2a2c, -7px 6px 0 #27272a;
@@ -245,7 +245,7 @@ h3 {
 
 .text {
   font-family: "Yanone Kaffeesatz", sans-serif;
-  font-size: 7vw; /* Font boyutunu viewport genişliğine göre ayarla */
+  font-size: 9vw; /* Font boyutunu viewport genişliğine göre ayarla */
   display: flex;
   position: absolute;
   bottom: 20vh;
@@ -382,7 +382,7 @@ h3 {
 }
 
 .nav__ul a {
-  color: #ffffff;
+  color: #838181;
   padding: 1px !important;
   
 }
@@ -484,7 +484,7 @@ h3 {
     height: 100vh;
   }
   .description{
-    font-size: 24px;
+    font-size: 18px;
   }
 
 }
