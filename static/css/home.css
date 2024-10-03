@@ -11,6 +11,7 @@
   --send-btn-bg: rgb(0, 150, 136);
   --send-btn-hover-bg: rgb(0, 200, 150);
 }
+
 ul {
   list-style: none;
   padding-left: 0;
@@ -121,6 +122,17 @@ body {
   border-radius: 50%;
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .msg-bubble {
   max-width: 450px;
   padding: 15px;
@@ -128,6 +140,7 @@ body {
   background: var(--left-msg-bg);
   position: relative;
   transition: transform 0.2s ease-in;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .msg-bubble:hover {
