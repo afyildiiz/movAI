@@ -78,7 +78,7 @@
   <div class="footer__addr">
     <h1 class="footer__logo"> </h1>
         
-    <h2><a href="{{url_for('about')}}">Contact</a></h2>
+    <!-- <h2><a href="{{url_for('about')}}">Contact</a></h2> -->
     
   </div>
   
@@ -139,7 +139,7 @@
   </ul>
   
   <div class="legal">
-    <p>&copy; 2024 bla bla bla. All rights reserved.</p>
+    <p style="opacity: 0.5;">&copy; 2024 bla bla bla. All rights reserved.</p>
     
 
   </div>
@@ -166,22 +166,33 @@
 
 
 document.addEventListener('mousemove', function(e) {
-  // Fare pozisyonunu al
-  let mouseX = e.clientX;
-  let mouseY = e.clientY;
+  const containerDiv = document.querySelector('.container')
+  const secondDiv =  document.querySelector('.second')
 
-  // Ekran genişliği ve yüksekliği
-  let windowWidth = window.innerWidth;
-  let windowHeight = window.innerHeight;
+  // Ekran genişliğini kontrol et
+  if (window.innerWidth > 768) {  // 768px'in üzerindeki ekranlarda parallax efekti çalışsın
+    // Fare pozisyonunu al
+    let mouseX = e.clientX;
+    let mouseY = e.clientY;
 
-  // Parallax hareketini hesapla
-  let moveX = ((mouseX / windowWidth) * 50) - 25; // 50 piksel hareket alanı sağlıyoruz
-  let moveY = ((mouseY / windowHeight) * 50) - 25;
+    // Ekran genişliği ve yüksekliği
+    let windowWidth = window.innerWidth;
+    let windowHeight = window.innerHeight;
 
-  // Arka planı hareket ettir
-  document.querySelector('.container').style.backgroundPosition = `${moveX}px ${moveY}px`;
-  document.querySelector('.second').style.backgroundPosition= `${moveX}px ${moveY}px`;
+    // Parallax hareketini hesapla
+    let moveX = ((mouseX / windowWidth) * 50) - 25; // 50 piksel hareket alanı sağlıyoruz
+    let moveY = ((mouseY / windowHeight) * 50) - 25;
+
+    // Arka planı hareket ettir
+    containerDiv.style.backgroundPosition = `${moveX}px ${moveY}px`;
+    secondDiv.style.backgroundPosition = `${moveX}px ${moveY}px`;
+  }
+  else{
+    containerDiv.style.backgroundPosition='center'
+    secondDiv.style.backgroundPosition='center'
+  }
 });
+
 
 
 document.querySelector('button[href="#blank"]').addEventListener('click', function(e) {

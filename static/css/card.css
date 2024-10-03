@@ -108,6 +108,15 @@
   .card p{
     font-size: 14px;
   }
+  .card {
+    height: auto;
+  }
+
+  .card__background {
+    height: auto; 
+    width: 100%;
+    object-fit: contain; 
+  }
 }
 
 
