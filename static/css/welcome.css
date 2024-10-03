@@ -131,6 +131,7 @@ a {
 .second {
   /* background-image: url('../img/aisekli.webp'); */
   background-attachment: fixed;
+  background-color: #252527;
   height: 900px;
 }
 
@@ -491,6 +492,10 @@ h3 {
 
 @media (max-width:600px) {
   .nav-links a{
-    color: black !important;
+    color: rgb(255, 255, 255) !important;
+  }
+
+  .nav-links{
+    background-color:rgba(0, 0, 0, 0.747) !important;
   }
 }
