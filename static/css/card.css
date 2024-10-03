@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap");
 
+*{
+  color: aliceblue;
+}
+
 :root {
   /* Colors */
   --brand-color: hsl(46, 100%, 50%);
@@ -11,50 +15,12 @@
 }
 
 
-/* Carousel Container */
-.carousel {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-.carousel__track-container {
-  overflow: hidden;
-  width: 100%;
-}
-
-.carousel__track {
-  display: flex;
-  transition: transform 300ms ease-in-out;
-  gap: 16px;
-}
-
-/* Butonlar */
-.carousel__button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  cursor: pointer;
-  padding: 1rem;
-  z-index: 2;
-}
-
-.carousel__button--left {
-  left: 0;
-}
-
-.carousel__button--right {
-  right: 0;
-}
 
 
 
-/* CARD COMPONENT */
 .card-container {
   display: flex;
+  justify-content: center;
   overflow-x: auto;
   gap: 16px;
   padding: 16px;
@@ -62,9 +28,11 @@
 }
 
 .card {
+  position:relative;
   display: grid;
   place-items: center;
   max-width: 21.875rem;
+  height: 30rem;
   overflow: hidden;
   border-radius: 0.625rem;
   box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
@@ -81,7 +49,14 @@
   height: 100%;
 }
 
-
+.card p{
+  position: absolute;
+  z-index: 1000000;
+  bottom: 0;
+  padding: 5px;
+  letter-spacing: 3px;
+  color: rgb(255, 255, 255);
+}
 
 
 @media (any-hover: hover) and (any-pointer: fine) {
@@ -129,73 +104,12 @@
   }
 }
 
-
-
-.icon-cards {
-
-  position: relative;
-  width: 60vw;
-  height: 40vw;
-  max-width: 380px;
-  max-height: 250px;
-  margin: 0;
-  color: white;
-  perspective: 1000px;
-  transform-origin: center;
-}
-
-.icon-cards__content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform-origin: center;
-  transform-style: preserve-3d;
-  transform: translateZ(-30vw) rotateY(0);
-  animation: carousel 10s infinite cubic-bezier(0.77, 0, 0.175, 1) forwards;
-}
-
-.icon-cards__content.step-animation {
-  animation: carousel 8s infinite steps(1) forwards;
-}
-
-.icon-cards__item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 60vw;
-  height: 40vw;
-  max-width: 380px;
-  max-height: 250px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
-  transform-origin: center;
-}
-
-.icon-cards__item:nth-child(1) {
-  transform: rotateY(0) translateZ(35vw);
-}
-
-.icon-cards__item:nth-child(2) {
-  transform: rotateY(120deg) translateZ(35vw);
-}
-
-.icon-cards__item:nth-child(3) {
-  transform: rotateY(240deg) translateZ(35vw);
-}
-
-@keyframes carousel {
-  0%, 17.5% {
-    transform: translateZ(-35vw) rotateY(0);
-  }
-  27.5%, 45% {
-    transform: translateZ(-35vw) rotateY(-120deg);
-  }
-  55%, 72.5% {
-    transform: translateZ(-35vw) rotateY(-240deg);
-  }
-  82.5%, 100% {
-    transform: translateZ(-35vw) rotateY(-360deg);
+@media screen and (max-width:500px) {
+  .card p{
+    font-size: 14px;
   }
 }
+
+
+
+
