@@ -32,7 +32,7 @@ def contact():
     return render_template("contact.html")
 
 
-@app.route('/welcome')
+@app.route('/')
 def welcome():
     return render_template('welcome.html')
 
@@ -146,7 +146,7 @@ def get_cohere_response(prompt):
 
     return response.generations[0].text.strip()
 
-@app.route("/")
+@app.route("/home")
 def home():
     return render_template('home.html')
 
