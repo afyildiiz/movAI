@@ -45,13 +45,14 @@ body {
   flex-direction: column;
   align-items: center; /* Yatayda ortalama */
   justify-content: center; /* Dikeyde ortalama */
-  background-image: url('../img/cool-background.png');
+  background-image: url('../img/pixelcut-export.png');
   background-size: cover;
   /* background-position: center; */
   position: relative;
   background-attachment: fixed;
   overflow: hidden;
-  /* background-position: 50% 50%; */
+  /* background-repeat: no-repeat;
+  background-position: 50% 50%; */
 }
 
 
@@ -479,7 +480,7 @@ h3 {
       max-width: 100%;
   }
   .container {
-    background-position: center;
+    background-position: 50% 50%;
     background-size: cover;
     height: 100vh;
   }
