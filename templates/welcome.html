@@ -1,207 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/welcome.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../static/css/about.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/welcome.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lato"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/about.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
 
     <title>Welcome to MovAI!</title>
-</head>
+  </head>
 
-<body>
-  {% include 'navbar.html' %}
+  <body>
+    {% include 'navbar.html' %}
 
+    <div class="parallax-container">
+      <div class="container">
+        <!--  -->
+        <div class="overlay"></div>
 
-  <div class="parallax-container">
-    <div class="container">
-
-<!--  -->
-<div class="overlay"></div>
-
-<div class="text">
-	<div class="wrapper">
-		<div id="M" class="letter">M</div>
-		<div class="shadow">M</div>
-	</div>
-	<div class="wrapper">
-		<div id="o" class="letter">o</div>
-		<div class="shadow">o</div>
-	</div>
-	<div class="wrapper">
-		<div id="v" class="letter">v</div>
-		<div class="shadow">v</div>
-	</div>
-	<div class="wrapper">
-		<div id="A" class="letter">A</div>
-		<div class="shadow">A</div>
-	</div>
-	<div class="wrapper">
-		<div id="I" class="letter">I</div>
-		<div class="shadow">I</div>
-	</div>
-</div>
+        <div class="text">
+          <div class="wrapper">
+            <div id="M" class="letter">M</div>
+            <div class="shadow">M</div>
+          </div>
+          <div class="wrapper">
+            <div id="o" class="letter">o</div>
+            <div class="shadow">o</div>
+          </div>
+          <div class="wrapper">
+            <div id="v" class="letter">v</div>
+            <div class="shadow">v</div>
+          </div>
+          <div class="wrapper">
+            <div id="A" class="letter">A</div>
+            <div class="shadow">A</div>
+          </div>
+          <div class="wrapper">
+            <div id="I" class="letter">I</div>
+            <div class="shadow">I</div>
+          </div>
+        </div>
 
         <p class="abc">a life integrated with AI</p>
         <button href="#blank" type="button" class="btn btn--yellow">
-            <span class="btn__txt">Learn More</span>
-            <i class="btn__bg" aria-hidden="true"></i>
-            <i class="btn__bg" aria-hidden="true"></i>
-            <i class="btn__bg" aria-hidden="true"></i>
-            <i class="btn__bg" aria-hidden="true"></i>
+          <span class="btn__txt">Learn More</span>
+          <i class="btn__bg" aria-hidden="true"></i>
+          <i class="btn__bg" aria-hidden="true"></i>
+          <i class="btn__bg" aria-hidden="true"></i>
+          <i class="btn__bg" aria-hidden="true"></i>
         </button>
+      </div>
     </div>
-</div>
 
-<div id="blank" class="blank">
-  <div class="owText text-center" >Discover Movies & TV Shows with AI-Powered Precision</div>
-  <div class="description">
-    Receive movie and TV show recommendations tailored just for you based on your favorite genres, actors, or directors.
-  </div>
+    <div id="blank" class="blank">
+      <div class="owText text-center">
+        Discover Movies & TV Shows with AI-Powered Precision
+      </div>
+      <div class="description">
+        Receive movie and TV show recommendations tailored just for you based on
+        your favorite genres, actors, or directors.
+      </div>
 
-  {% include 'card.html' %}
-  
-  </article>
-</div>
+      {% include 'card.html' %}
 
-<!-- <div class=" second">
+      <div style="display: flex; justify-content: center">
+        <a href="{{url_for('home')}}">
+        <button class="button">
+          <span class="button_lg">
+            <span class="button_sl"></span>
+            <span class="button_text">LET'S GO</span>
+          </span>
+        </button>
+      </a>
+      </div>
+    </div>
+
+    <!-- <div class=" second">
 
 </div> -->
 
+    <footer class="footer">
+      <div class="footer__addr">
+        <h1 class="footer__logo"></h1>
 
+        <h2><a href="{{url_for('about')}}">CONTACT</a></h2>
+      </div>
 
-<footer class="footer">
-  <div class="footer__addr">
-    <h1 class="footer__logo"> </h1>
-        
-    <h2><a href="{{url_for('about')}}">CONTACT</a></h2>
-    
-  </div>
-  
-  <ul class="footer__nav">
-    <li class="nav__item">
-      <h2 class="nav__title">Media</h2>
+      <ul class="footer__nav">
+        <li class="nav__item">
+          <h2 class="nav__title">Media</h2>
 
-      <ul class="nav__ul">
-        <li>
-          <a href="#">Online</a>
+          <ul class="nav__ul">
+            <li>
+              <a href="#">Online</a>
+            </li>
+
+            <li>
+              <a href="#">Print</a>
+            </li>
+
+            <li>
+              <a href="#">Alternative Ads</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav__item">
+          <h2 class="nav__title">Company</h2>
+
+          <ul class="nav__ul">
+            <li>
+              <a href="#">Us</a>
+            </li>
+
+            <li>
+              <a href="#">Motivation</a>
+            </li>
+
+            <li>
+              <a href="#">Vision</a>
+            </li>
+          </ul>
         </li>
 
-        <li>
-          <a href="#">Print</a>
-        </li>
-            
-        <li>
-          <a href="#">Alternative Ads</a>
-        </li>
-      </ul>
-    </li>
-    <li class="nav__item">
-      <h2 class="nav__title">Company</h2>
+        <li class="nav__item">
+          <h2 class="nav__title">Legal</h2>
 
-      <ul class="nav__ul">
-        <li>
-          <a href="#">Us</a>
-        </li>
+          <ul class="nav__ul">
+            <li>
+              <a href="#">Privacy Policy</a>
+            </li>
 
-        <li>
-          <a href="#">Motivation</a>
-        </li>
-            
-        <li>
-          <a href="#">Vision</a>
-        </li>
-      </ul>
-    </li>
-  
-    
-    <li class="nav__item">
-      <h2 class="nav__title">Legal</h2>
-      
-      <ul class="nav__ul">
-        <li>
-          <a href="#">Privacy Policy</a>
-        </li>
-        
-        <li>
-          <a href="#">Terms of Use</a>
-        </li>
-        
-        <li>
-          <a href="#">Sitemap</a>
+            <li>
+              <a href="#">Terms of Use</a>
+            </li>
+
+            <li>
+              <a href="#">Sitemap</a>
+            </li>
+          </ul>
         </li>
       </ul>
-    </li>
-  </ul>
-  
-  <div class="legal">
-    <p style="opacity: 0.5;">&copy; 2024 bla bla bla. All rights reserved.</p>
-    
 
-  </div>
-</footer>
+      <div class="legal">
+        <p style="opacity: 0.5">
+          &copy; 2024 bla bla bla. All rights reserved.
+        </p>
+      </div>
+    </footer>
 
+    <script>
+      document.addEventListener("mousemove", (e) => {
+        const x = e.clientX; // Mouse'un x koordinatı
+        const y = e.clientY; // Mouse'un y koordinatı
 
-      <script>
+        // Pencere genişliği ve yüksekliğini al
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
 
+        // Arka plan pozisyonunu mouse konumuna göre ayarla
+        const xPercent = (x / windowWidth) * 100; // Yüzde olarak x konumu
+        const yPercent = (y / windowHeight) * 100; // Yüzde olarak y konumu
 
-        document.addEventListener('mousemove', (e) => {
-    const x = e.clientX; // Mouse'un x koordinatı
-    const y = e.clientY; // Mouse'un y koordinatı
+        document.body.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+      });
 
-    // Pencere genişliği ve yüksekliğini al
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+      document.addEventListener("mousemove", function (e) {
+        const containerDiv = document.querySelector(".container");
+        const secondDiv = document.querySelector(".second");
 
-    // Arka plan pozisyonunu mouse konumuna göre ayarla
-    const xPercent = (x / windowWidth) * 100; // Yüzde olarak x konumu
-    const yPercent = (y / windowHeight) * 100; // Yüzde olarak y konumu
+        // Ekran genişliğini kontrol et
+        if (window.innerWidth > 768) {
+          // 768px'in üzerindeki ekranlarda parallax efekti çalışsın
+          // Fare pozisyonunu al
+          let mouseX = e.clientX;
+          let mouseY = e.clientY;
 
-    document.body.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
-});
+          // Ekran genişliği ve yüksekliği
+          let windowWidth = window.innerWidth;
+          let windowHeight = window.innerHeight;
 
+          // Parallax hareketini hesapla
+          let moveX = (mouseX / windowWidth) * 50 - 25; // 50 piksel hareket alanı sağlıyoruz
+          let moveY = (mouseY / windowHeight) * 50 - 25;
 
-document.addEventListener('mousemove', function(e) {
-  const containerDiv = document.querySelector('.container')
-  const secondDiv =  document.querySelector('.second')
+          // Arka planı hareket ettir
+          containerDiv.style.backgroundPosition = `${moveX}px ${moveY}px`;
+          secondDiv.style.backgroundPosition = `${moveX}px ${moveY}px`;
+        } else {
+          containerDiv.style.backgroundPosition = "center";
+          secondDiv.style.backgroundPosition = "center";
+        }
+      });
 
-  // Ekran genişliğini kontrol et
-  if (window.innerWidth > 768) {  // 768px'in üzerindeki ekranlarda parallax efekti çalışsın
-    // Fare pozisyonunu al
-    let mouseX = e.clientX;
-    let mouseY = e.clientY;
+      document
+        .querySelector('button[href="#blank"]')
+        .addEventListener("click", function (e) {
+          e.preventDefault(); // Varsayılan tıklama davranışını engelle
 
-    // Ekran genişliği ve yüksekliği
-    let windowWidth = window.innerWidth;
-    let windowHeight = window.innerHeight;
-
-    // Parallax hareketini hesapla
-    let moveX = ((mouseX / windowWidth) * 50) - 25; // 50 piksel hareket alanı sağlıyoruz
-    let moveY = ((mouseY / windowHeight) * 50) - 25;
-
-    // Arka planı hareket ettir
-    containerDiv.style.backgroundPosition = `${moveX}px ${moveY}px`;
-    secondDiv.style.backgroundPosition = `${moveX}px ${moveY}px`;
-  }
-  else{
-    containerDiv.style.backgroundPosition='center'
-    secondDiv.style.backgroundPosition='center'
-  }
-});
-
-
-
-document.querySelector('button[href="#blank"]').addEventListener('click', function(e) {
-    e.preventDefault(); // Varsayılan tıklama davranışını engelle
-
-    const target = document.querySelector('#blank'); // Hedef div
-    target.scrollIntoView({ behavior: 'smooth' }); // Hedef div'e kaydır
-});
-      </script>
-</body>
-
+          const target = document.querySelector("#blank"); // Hedef div
+          target.scrollIntoView({ behavior: "smooth" }); // Hedef div'e kaydır
+        });
+    </script>
+  </body>
 </html>
