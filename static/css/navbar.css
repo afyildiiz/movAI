@@ -216,7 +216,7 @@ html {
     height: 0px;
   }
   .nav > #nav-check:checked ~ .nav-links {
-    height: 145px;
+    height: 165px;
     overflow-y: auto;
     margin-top: 0.6em;
   }
