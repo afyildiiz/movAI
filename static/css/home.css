@@ -251,7 +251,7 @@ body {
   align-items:center;
 }
 
-@media screen and (max-width:490px){
+@media screen and (max-width:768px){
   .msger{
     width:100%;
     height:100%;
