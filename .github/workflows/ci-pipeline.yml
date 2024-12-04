@@ -30,3 +30,13 @@ jobs:
       env:
         COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
       run: PYTHONPATH=. pytest
+
+    - name: Deploy to Kubernetes
+      uses: azure/k8s-deploy@v4
+      with:
+        manifests: |
+          ./deployment.yaml
+          ./service.yaml
+          ./secret.yaml
+        images: afyildiz/flask_chatbot:latest
+        namespace: default
