@@ -35,8 +35,8 @@ jobs:
       uses: azure/k8s-deploy@v4
       with:
         manifests: |
-          ./deployment.yaml
-          ./service.yaml
-          ./secret.yaml
+          ./k8s/deployment.yaml
+          ./k8s/service.yaml
+          ./k8s/secret.yaml
         images: afyildiz/flask_chatbot:latest
         namespace: default
