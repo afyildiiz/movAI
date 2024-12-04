@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  test:
+  test-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,12 +31,13 @@ jobs:
         COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
       run: PYTHONPATH=. pytest
 
+    - name: Set up Kubernetes context
+      run: |
+        echo "${{ secrets.KUBECONFIG_CONTENT }}" | base64 --decode > kubeconfig
+        export KUBECONFIG=$(pwd)/kubeconfig
+
     - name: Deploy to Kubernetes
-      uses: azure/k8s-deploy@v4
-      with:
-        manifests: |
-          ./k8s/deployment.yaml
-          ./k8s/service.yaml
-          ./k8s/secret.yaml
-        images: afyildiz/flask_chatbot:latest
-        namespace: default
+      run: |
+        kubectl apply -f ./k8s/secret.yaml
+        kubectl apply -f ./k8s/deployment.yaml
+        kubectl apply -f ./k8s/service.yaml
