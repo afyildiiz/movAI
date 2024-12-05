@@ -14,7 +14,7 @@ spec:
       labels:
         app: flask-chatbot
     spec:
-      containers:
+    containers:
       - name: flask-chatbot
         image: afyildiz/flask_chatbot:latest
         ports:
@@ -24,4 +24,4 @@ spec:
           valueFrom:
             secretKeyRef:
               name: cohere-api-secret
-              key: api_key
+              key: COHERE_API_KEY
