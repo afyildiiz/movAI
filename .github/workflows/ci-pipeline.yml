@@ -35,10 +35,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Kubernetes context
+    - name: Use kubeconfig from repo
       run: |
-        echo "${{ secrets.KUBECONFIG_CONTENT }}" | base64 --decode > kubeconfig
-        export KUBECONFIG=$(pwd)/kubeconfig
+        export KUBECONFIG=$(pwd)/k8s/kubeconfig
+        kubectl get nodes
 
     - name: Deploy to Kubernetes
       run: |
