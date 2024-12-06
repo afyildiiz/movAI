@@ -28,6 +28,7 @@ jobs:
       with:
         context: .
         tags: ${{ secrets.DOCKER_USERNAME }}/flask-chatbot:latest
+        push: true
 
   deploy:
     name: Deploy to Kubernetes
