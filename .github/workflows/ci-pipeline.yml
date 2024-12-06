@@ -32,14 +32,18 @@ jobs:
 
   deploy:
     name: Deploy to Kubernetes
-    needs: build-and-push  # Deploy işlemi, build-and-push işinden sonra başlar
+    needs: build-and-push
     runs-on: ubuntu-latest
 
     steps:
-    - name: Use kubeconfig from repo
+    - name: Check out the repository
+      uses: actions/checkout@v3
+
+    - name: Set up kubeconfig
       run: |
-        export KUBECONFIG=$(pwd)/k8s/kubeconfig
-        kubectl get nodes
+        echo "${{ secrets.KUBECONFIG_CONTENT }}" | base64 --decode > kubeconfig
+        export KUBECONFIG=$(pwd)/kubeconfig
+        kubectl cluster-info
 
     - name: Deploy to Kubernetes
       run: |
