@@ -27,7 +27,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        tags: ${{ secrets.DOCKER_USERNAME }}/flask-chatbot:latest
+        tags: afyildiz/flask-chatbot:latest
         push: true
 
   deploy:
