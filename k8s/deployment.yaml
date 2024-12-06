@@ -14,7 +14,7 @@ spec:
       labels:
         app: flask-chatbot
     spec:
-    containers:
+      containers:
       - name: flask-chatbot
         image: afyildiz/flask_chatbot:latest
         ports:
@@ -25,3 +25,10 @@ spec:
             secretKeyRef:
               name: cohere-api-secret
               key: COHERE_API_KEY
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
