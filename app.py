@@ -1,12 +1,16 @@
 import os
 import requests
 import cohere
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
 from dotenv import load_dotenv
-from flask import Flask
 from flask_mail import Mail, Message
+from mixpanel import Mixpanel
+import uuid
 
 app = Flask(__name__)
+mp = Mixpanel("fcd6c4f8e8f8f18a8b868f3038d75af6")
+app.secret_key = "11fedff5ebd77bb1fd7ca4452da2c171"
+
 load_dotenv()
 
 # SMTP AYARLARI
@@ -22,6 +26,12 @@ tmdb_api_key = os.environ.get('TMDB_API_KEY')
 cohere_api_key = os.environ.get('COHERE_API_KEY')
 
 co = cohere.Client(cohere_api_key)
+
+
+@app.before_request
+def set_anon_id():
+    if 'distinct_id' not in session:
+        session['distinct_id'] = str(uuid.uuid4())
 
 app.route("/card")
 def card():
@@ -132,7 +142,7 @@ def get_cohere_response(prompt):
     """Cohere API'sinden yanıt alma"""
 
     response = co.generate(
-        model='command-xlarge-nightly',
+        model='command-xlarge',
         prompt=prompt,
         max_tokens=450,
         temperature=0.7,
@@ -148,11 +158,20 @@ def get_cohere_response(prompt):
 
 @app.route("/home")
 def home():
+    # mp.track(session["distinct_id"],"Home Button Clicked", {
+    #     "ip": request.remote_addr,
+    #     "path": request.path
+    # })
     return render_template('home.html')
+
+
+
 
 @app.route("/get_response", methods=["POST"])
 def get_response():
     user_input = request.form["user_input"]
+
+
 
     # Cohere'a gönderilecek promptu oluştur
     prompt = f"""
@@ -210,6 +229,13 @@ def get_response():
     """
 
     response = get_cohere_response(prompt)
+
+    # Mixpanel'e event gönder
+    mp.track(session['distinct_id'], "Conversation Happened", {
+        "message": user_input,
+        "path": request.path,
+        "response":response
+    })
 
     return response 
 
