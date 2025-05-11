@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from flask_mail import Mail, Message
 from mixpanel import Mixpanel
 import uuid
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -243,4 +244,5 @@ def get_response():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=8000)
+    port = int(os.environ.get("PORT", 8000))  # Railway PORT, local fallback = 5000
+    serve(app, host="0.0.0.0", port=port)
