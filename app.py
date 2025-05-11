@@ -8,8 +8,7 @@ from mixpanel import Mixpanel
 import uuid
 
 app = Flask(__name__)
-mp = Mixpanel("fcd6c4f8e8f8f18a8b868f3038d75af6")
-app.secret_key = "11fedff5ebd77bb1fd7ca4452da2c171"
+
 
 load_dotenv()
 
@@ -24,9 +23,12 @@ mail = Mail(app)
 
 tmdb_api_key = os.environ.get('TMDB_API_KEY')
 cohere_api_key = os.environ.get('COHERE_API_KEY')
+PROJECT_KEY = os.environ.get("MP_PROJECT_KEY")
+API_SECRET = os.environ.get("MP_API_SECRET")
 
 co = cohere.Client(cohere_api_key)
-
+mp = Mixpanel(PROJECT_KEY)
+app.secret_key = API_SECRET
 
 @app.before_request
 def set_anon_id():
