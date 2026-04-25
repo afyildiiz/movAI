@@ -1,72 +1,78 @@
-from flask import Blueprint, request, session
+from flask import Blueprint, current_app, request, session
 from mixpanel import Mixpanel
 
 from movai.services.ai import get_cohere_response
+from movai.services.tmdb import get_recommendations, search_title
 
 chat_bp = Blueprint("chat", __name__)
+
+SIMILAR_KEYWORDS = [
+    "similar", "like", "recommend", "suggestion", "benzer", "oneri",
+    "öneri", "tavsiye", "gibi", "benzeri", "more like",
+]
+
+
+def _wants_recommendations(text):
+    lower = text.lower()
+    return any(kw in lower for kw in SIMILAR_KEYWORDS)
 
 
 @chat_bp.route("/get_response", methods=["POST"])
 def get_response():
-    from flask import current_app
-
     user_input = request.form["user_input"]
 
-    prompt = f"""
-        You are a movie and TV show chatbot. Users will ask you for movie or TV show titles, and you will provide them with relevant information using the TMDB API. You can also list popular movies and the best movies by genre.
+    # Check if user is asking for similar titles based on previous search
+    if _wants_recommendations(user_input) and session.get("last_tmdb"):
+        last = session["last_tmdb"]
+        recs = get_recommendations(last["media_type"], last["tmdb_id"])
 
-        Respond to the user in an understanding manner and perhaps suggest another search.
+        if recs:
+            rec_lines = []
+            for r in recs:
+                rec_lines.append(
+                    f"- {r['title']} ({r['release_date']}) | "
+                    f"TMDB: {r['tmdb_url']} | {r['overview']}"
+                )
+            recs_text = "\n".join(rec_lines)
 
-        User's request: {user_input}
+            context = (
+                f"The user previously searched for: {last['title']} ({last['media_type']})\n"
+                f"They are now asking for similar titles.\n\n"
+                f"Here are TMDB verified recommendations:\n{recs_text}\n\n"
+                f"Present these recommendations using the EXACT TMDB links above. "
+                f"Do NOT invent or guess any TMDB URL.\n\n"
+                f"User's request: {user_input}"
+            )
+        else:
+            context = user_input
+    else:
+        # Normal title search
+        tmdb_data = search_title(user_input)
 
-        Use the TMDB API to provide an appropriate response.
+        if tmdb_data:
+            # Store in session for follow-up recommendation requests
+            session["last_tmdb"] = {
+                "title": tmdb_data["title"],
+                "media_type": tmdb_data["media_type"],
+                "tmdb_id": tmdb_data["tmdb_id"],
+            }
 
-        If the user requests information about a movie or TV series, first find the movie or TV series using the TMDB API. Then, make sure it contains the following information and please structure your response under the following subheadings:
-        * Movie Details
-        * Title:
-        * Overview:
-        * Release Date:
-        * Genres:
-        * Production Countries:
-        * TMDB Link: (in the format <a href="https://www.themoviedb.org/movie/<movie_id>" target="_blank">TMDB Page</a>)
-        * Streaming Platforms: (if exist, must be)
-        If the user requests popular movies or the best movies by a specific genre, provide the relevant lists.
+            context = (
+                f"TMDB verified data for this query:\n"
+                f"Title: {tmdb_data['title']}\n"
+                f"Type: {tmdb_data['media_type']}\n"
+                f"Overview: {tmdb_data['overview']}\n"
+                f"Release Date: {tmdb_data['release_date']}\n"
+                f"Genres: {tmdb_data['genres']}\n"
+                f"Production Countries: {tmdb_data['countries']}\n"
+                f"TMDB Link: {tmdb_data['tmdb_url']}\n\n"
+                f"Use EXACTLY the TMDB Link above. Do NOT invent or guess any TMDB URL.\n\n"
+                f"User's request: {user_input}"
+            )
+        else:
+            context = user_input
 
-        If you don't understand the user's request, politely ask for more information or clarification.
-
-        You should make the html view as follows and never break this rule:
-
-            <h3>Movie Details</h3>
-            </br>
-        <ul>
-            <li><strong>Title:</strong> Narcos</li>
-            </br>
-            <li><strong>Overview:</strong> 'Narcos' is an exciting and gritty crime drama series...</li>
-            </br>
-            <li><strong>Release Date:</strong> August 28, 2015</li>
-            </br>
-            <li><strong>Genres:</strong> Crime, Drama, Biography</li>
-            </br>
-            <li><strong>Production Countries:</strong> United States, Colombia</li>
-            </br>
-            <li><strong>TMDB Link:</strong> <a href="https://www.themoviedb.org/movie/63351" target="_blank">TMDB Page</a> </li>
-            </br>
-            <li><strong>Streaming Platforms:</strong> Netflix, Disney+ </li>
-            </br>
-
-        </ul>
-
-        <h2>Popular Movies:</h2>
-        </br>
-        <ul>
-            <li><strong>Inception</strong><br />Release Date: July 16, 2010</li>
-            </br>
-            <li><strong>The Dark Knight</strong><br />Release Date: July 18, 2008</li>
-            </br>
-        </ul>
-    """
-
-    response = get_cohere_response(prompt)
+    response = get_cohere_response(context)
 
     mp = Mixpanel(current_app.config["MP_PROJECT_KEY"])
     mp.track(

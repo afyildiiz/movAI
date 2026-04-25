@@ -109,13 +109,16 @@ body {
 
 .msg {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   margin-bottom: 15px;
+  gap: 10px;
 }
 
 .msg-img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  flex-shrink: 0;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -134,30 +137,23 @@ body {
 }
 
 .msg-bubble {
-  max-width: 450px;
-  padding: 15px;
+  max-width: 75%;
+  padding: 12px 15px;
   border-radius: 15px;
   background: var(--left-msg-bg);
   position: relative;
-  transition: transform 0.2s ease-in;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-.msg-bubble:hover {
-  transform: scale(1.05);
+  animation: fadeIn 0.3s ease-in-out;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  color: #333;
 }
 
 .left-msg .msg-bubble {
   border-bottom-left-radius: 0;
 }
-.left-msg{
-  flex-wrap: wrap;
-
-}
 
 .right-msg {
   flex-direction: row-reverse;
-  flex-wrap: wrap;
 }
 
 .right-msg .msg-bubble {
@@ -242,25 +238,67 @@ body {
   font-size: 10px;
 }
 
-@media screen and (max-width:490px){
-  .msger-header-title{
-    font-size: 10px;
+/* Tablet */
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 3rem;
+  }
+  .msger {
+    width: 95%;
+    height: calc(100% - 40px);
   }
   .header {
-    font-size: 2rem;
+    font-size: 2.2rem;
+    top: 55px;
   }
-  .msger-header{
-    padding:15px ;
+  .msger-header {
+    padding: 15px;
   }
-  .header-right{
+  .msg-bubble {
+    max-width: 85%;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 490px) {
+  body {
+    padding-top: 2.5rem;
+  }
+  .msger {
+    width: 100%;
+    height: calc(100% - 30px);
+    border-radius: 0;
+  }
+  .header {
+    font-size: 1.6rem;
+    top: 45px;
+  }
+  .msger-header-title {
+    font-size: 12px;
+  }
+  .msger-header {
+    padding: 12px;
+  }
+  .header-right {
     font-size: 10px;
+  }
+  .msg-img {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+  }
+  .msg-bubble {
+    max-width: 80%;
+    padding: 10px 12px;
+    font-size: 0.9em;
   }
   .msger-input {
-    width: 90%;
-    font-size: 10px;
-
+    font-size: 14px;
+    padding: 8px;
   }
-
+  .msger-send-btn {
+    width: 40px;
+  }
 }
 
 
