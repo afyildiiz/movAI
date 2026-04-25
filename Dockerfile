@@ -1,15 +1,12 @@
-# Temel imaj olarak Python 3.x kullan
-FROM python:3.11
+FROM python:3.11-slim
 
-# Çalışma dizinini ayarla
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 WORKDIR /app
 
-# Bağımlılıkları kopyala ve yükle
-COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev
 
-# Uygulama kodunu kopyala
 COPY . .
 
-# Flask uygulamasını çalıştırmak için komut
-CMD ["python", "app.py", "--host=0.0.0.0"]
+CMD ["uv", "run", "movai"]
